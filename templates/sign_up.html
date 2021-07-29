@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/design.css">
+    <meta charset="UTF-8">
+    <title>sign_up</title>
+    <link rel="shortcut icon" href="static/images/logo.png" />
+</head>
+<body style="background-image: url(https://static.vecteezy.com/system/resources/thumbnails/001/361/538/small/orange-watercolor-background-free-vector.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+
+<a href="/"><img src="static/images/Home-Button.png" style="width:4%; height: 4%;" align="right"></a>
+
+<div class="login-box">
+    <h2>Sign up</h2>
+    <form action="/sign_up" method = "POST">
+        <div class="user-box">
+            <input type="text" name="email" required="">
+            <label>Email</label>
+        </div>
+        <div class="user-box">
+            <input type="password" name="password" required="">
+            <label>Password</label>
+        </div>
+        <div class="user-box">
+            <input type="text" name="first_name" required="">
+            <label>First name</label>
+        </div>
+        <div class="user-box">
+            <input type="text" name="last_name" required="">
+            <label>Last name</label>
+        </div>       
+        {% if empty == False %}
+            <p style="color: white; font-size: 18px;">Some fields are empty</p>
+        {% endif %}
+        {% if emailError == False %}
+            <p style="color: white; font-size: 18px;">Email is not valid</p>
+        {% endif %}
+        {% if exists == False %}
+            <p style="color: white; font-size: 18px;">Email already used</p>
+        {% endif %}
+        <a style="color: white;" href="" onclick="this.closest('form').submit();return false;">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        Sign up
+        </a>
+        <a style="color: white;" href="/login">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            Log in
+            </a>
+    </form>
+</div>
+
+</body>
+</html>
