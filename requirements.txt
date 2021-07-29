@@ -1,4 +1,5 @@
 2to3==1.0
+3to2==1.1.1
 asn1crypto==0.24.0
 backports-abc==0.5
 backports.functools-lru-cache==1.5
@@ -16,6 +17,7 @@ entrypoints==0.2.3
 enum34==1.1.6
 Flask==1.0.2
 Flask-Login==0.4.1
+functools32==3.2.3.post2
 futures==3.2.0
 gunicorn==19.10.0
 gyp==0.1
