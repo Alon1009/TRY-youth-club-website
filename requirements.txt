@@ -17,7 +17,6 @@ entrypoints==0.2.3
 enum34==1.1.6
 Flask==1.0.2
 Flask-Login==0.4.1
-functools32==3.2.3.post2
 futures==3.2.0
 gunicorn==19.10.0
 gyp==0.1
