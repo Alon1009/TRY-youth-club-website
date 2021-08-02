@@ -29,14 +29,10 @@ def get_account(their_email):
     return account
 
 
-
-
 def sign_up_database(email, first_name, last_name, password):
-    new_account = Make_account(first_name=first_name, last_name=last_name, email=email,password=password)
+    new_account = Make_account(first_name=first_name, last_name=last_name, email=email, password=password)
     session.add(new_account)
     session.commit()
-
-
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -97,21 +93,21 @@ def sign_up():
         last_name = request.form['last_name']
         email = get_email
         if email == "" or password == "" or first_name == "" or last_name == "":
-          return render_template('sign_up.html', login=login, email=email, empty=False)
+            return render_template('sign_up.html', login=login, email=email, empty=False)
         elif "@" not in email and "." not in email:
-          return render_template('sign_up.html', login=login, email=email, emailError=False) 
+            return render_template('sign_up.html', login=login, email=email, emailError=False)
         else:
-          if get_account(email) is None:
-            login = True
-            sign_up_database(get_email, first_name, last_name, password)
-            return render_template('index.html', login=login, email=email, login_info=True)
-          else:
-            return render_template('sign_up.html', login=login, email=email, exists=False)
+            if get_account(email) is None:
+                login = True
+                sign_up_database(get_email, first_name, last_name, password)
+                return render_template('index.html', login=login, email=email, login_info=True)
+            else:
+                return render_template('sign_up.html', login=login, email=email, exists=False)
     else:
         return render_template('sign_up.html')
 
 
-@app.route('/donate', methods=['GET','POST'])
+@app.route('/donate', methods=['GET', 'POST'])
 def donate():
     global email
     global login
@@ -121,7 +117,7 @@ def donate():
         return render_template('donate.html', login=login, email=email)
 
 
-@app.route('/news', methods=['GET','POST'])
+@app.route('/news', methods=['GET', 'POST'])
 def news():
     global email
     global login
@@ -131,7 +127,7 @@ def news():
         return render_template('newsWorkShop.html', login=login, email=email)
 
 
-@app.route('/log_out', methods=['GET','POST'])
+@app.route('/log_out', methods=['GET', 'POST'])
 def log_out():
     global email
     global login
@@ -142,8 +138,7 @@ def log_out():
         return render_template('index.html', login=login, email=email)
 
 
-
-@app.route('/about', methods=['GET','POST'])
+@app.route('/about', methods=['GET', 'POST'])
 def aboutUs():
     global email
     global login
@@ -153,7 +148,7 @@ def aboutUs():
         return render_template('abo.html', login=login, email=email)
 
 
-@app.route('/contact', methods=['GET','POST'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contactUs():
     global email
     global login
