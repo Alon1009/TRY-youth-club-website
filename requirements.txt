@@ -1,6 +1,5 @@
 2to3==1.0
 3to2==1.1.1
-Brlapi==0.6.6
 Flask==1.0.2
 Flask-Login==0.4.1
 Jinja2==2.10
