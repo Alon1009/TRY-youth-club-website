@@ -11,3 +11,4 @@ class Make_account(Base):
     last_name = Column(String)
     email = Column(String)
     password = Column(String)
+    admin = Column(Boolean)

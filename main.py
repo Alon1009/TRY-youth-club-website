@@ -29,8 +29,8 @@ def get_account(their_email):
     return account
 
 
-def sign_up_database(email, first_name, last_name, password):
-    new_account = Make_account(first_name=first_name, last_name=last_name, email=email, password=password)
+def sign_up_database(email, first_name, last_name, password, admin):
+    new_account = Make_account(first_name=first_name, last_name=last_name, email=email, password=password, admin=admin)
     session.add(new_account)
     session.commit()
 
@@ -39,6 +39,7 @@ def sign_up_database(email, first_name, last_name, password):
 def login():
     global email
     global login
+    admin = get_account(email).admin
     if login != True:
         login = False
     if request.method == 'POST':
@@ -51,18 +52,19 @@ def login():
             if password == get_account(login_email).password:
                 print("login successful")
                 login = True
-                return render_template('index.html', login=login, email=email)
+                return render_template('index.html', login=login, email=email, admin=admin)
             else:
                 print("login info incorrect")
                 return render_template('login.html', login=login, login_info=False)
     else:
-        return render_template('index.html', login=login, email=email)
+        return render_template('index.html', login=login, email=email, admin=admin)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_2():
     global email
     global login
+    admin = get_account(email).admin
     if request.method == 'POST':
         login_email = request.form['email']
         password = request.form['password']
@@ -73,7 +75,7 @@ def login_2():
             if password == get_account(login_email).password:
                 print("login successful")
                 login = True
-                return render_template('index.html', login=login, email=email)
+                return render_template('index.html', login=login, email=email, admin=admin)
             else:
                 print("login info incorrect")
                 return render_template('login.html', login=login, login_info=False)
@@ -86,6 +88,7 @@ def login_2():
 def sign_up():
     global email
     global login
+    admin = get_account(email).admin
     if request.method == 'POST':
         get_email = request.form['email']
         password = request.form['password']
@@ -100,7 +103,7 @@ def sign_up():
             if get_account(email) is None:
                 login = True
                 sign_up_database(get_email, first_name, last_name, password)
-                return render_template('index.html', login=login, email=email, login_info=True)
+                return render_template('index.html', login=login, email=email, login_info=True, admin=admin)
             else:
                 return render_template('sign_up.html', login=login, email=email, exists=False)
     else:
