@@ -62,11 +62,13 @@
                     <ul class="menu-area-main">
                       <li class="active"> <a href="index.html">Home</a> </li>
                       <li> <a href="#about">About us</a> </li>
-
                       <li> <a href="/news">WorkShop</a> </li>
                       <li> <a href="#contact">Contact</a> </li>
-                      {% if admin == True %}
-                      <li> <a href="/admin_page_page">admin</a> </li>
+                      {% if login == False %}
+                      <li> <a href="/login">Login</a> </li>
+                      {% endif %}
+                      {% if login == True %}
+                      <li> <a href="/log_out">Log out</a> </li>
                       {% endif %}
                      </ul>
                    </nav>
@@ -74,14 +76,13 @@
                </div> 
                <div class="mean-last">
                 <center>
-                       {% if login == False %}
-                      <li> <a href="/login">Login</a> </li>
-                      {% endif %} 
-                      {% if login == True %}
-                      <li> <a href="/log_out">logout</a> </li>
+                      {% if login == False %}
+                       <a href="/login">login</a>            
                       {% endif %}
-
-                </center>            
+                      {% if login == True %}
+                      <a href="/log_out">logout</a>
+                      {% endif %}
+                </center></div>
              </div>
            </div>
          </div>
@@ -117,8 +118,6 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
           <div class="carousel-item">
@@ -193,8 +192,10 @@
     <div class="row">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
         <div class="about-box">
-          <h2>About <strong class="yellow">Us</strong></h2>
-          <p> TRY is a nonprofit startup tackling widespread violence in communities. We provide high school students with a multi-dimensional curriculum, giving youth the tools and skills to reduce violence and crime in their own neighborhoods.</p>
+          <h2>About <strong class="yellow">Our Game</strong></h2>
+          <p> orem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptatem maiores eaque similique non distinctio voluptates perspiciatis omnis, repellendus ipsa aperiam, laudantium voluptatum nulla?.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, assumenda, vo
+          luptatum. Libero eligendi molestias iure error animi totam laudantium, aspernatur similique id eos at consectetur illo culpa,  </p>
           <a href="Javascript:void(0)">Read more</a>
         </div>
       </div>
