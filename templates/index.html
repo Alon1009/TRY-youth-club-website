@@ -60,7 +60,7 @@
                 <div class="limit-box">
                   <nav class="main-menu ">
                     <ul class="menu-area-main">
-                      <li class="active"> <a href="index.html">Home</a> </li>
+                      <li class="active"> <a href="/home">Home</a> </li>
                       <li> <a href="#about">About us</a> </li>
                       <li> <a href="/news">WorkShop</a> </li>
                       <li> <a href="#contact">Contact</a> </li>
@@ -69,6 +69,9 @@
                       {% endif %}
                       {% if login == True %}
                       <li> <a href="/log_out">Log out</a> </li>
+                      {% endif %}
+                      {% if admin == True %}
+                      <li> <a href="/admin_page_page">Admin</a> </li>
                       {% endif %}
                      </ul>
                    </nav>

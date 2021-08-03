@@ -96,7 +96,16 @@ def update_admin(user, isActuallyAdmin):
     session.commit()
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+def home():
+    global email
+    global login
+    login = False
+    isAdmin = False
+    return render_template('index.html', login=login, email=email, admin=isAdmin)
+
+
+@app.route('/home', methods=['GET', 'POST'])
 def login():
     global email
     global login
