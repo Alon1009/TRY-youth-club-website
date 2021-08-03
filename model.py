@@ -23,7 +23,7 @@ class Create_workshop(Base):
 
 
 
-class People_in_workshop_ids(Base):
+class Registered_users(Base):
 	__tablename__ = "people_ids"
 	id = Column(Integer, primary_key=True)
 	workshop_id = Column(Integer)

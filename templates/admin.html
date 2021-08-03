@@ -1,0 +1,79 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<title>Page Title</title>
+</head>
+<body>
+
+<center><h1>WorkShops List</h1></center>
+
+<table style="width: 100%; border:1px black double">
+	
+
+	<tr>
+		<th>id</th>
+		<th>workshop name</th>
+		<th>details</th>
+		<th>pictures</th>
+		<th>delete workshop</th>
+		<th><a href="/add_workshop" class="btn btn-success">add workshop</a></th>
+	</tr>
+
+	{% for workshop in workshops %}
+  	<tr>
+  		<td>{{workshop.id}}</td>
+		<td>{{workshop.workshop_name}}</td>
+		<td>{{workshop.details}}</td>
+		<td>{{workshop.pictures }}</td>
+		<td><a class="btn btn-danger" href="/remove_workshop/{{workshop.id}}">remove workshop</a></td>
+
+	</tr>
+	{% endfor %}
+
+
+</table>
+
+
+<center><h1>Users List</h1></center>
+
+<table style="width: 100%; border:1px black double">
+	
+
+	<tr>
+		<th>id</th>
+		<th>first name</th>
+		<th>last name</th>
+		<th>email</th>
+		<th>password</th>
+		<th>admin</th>
+		<th>promote to admin</th>
+		<th>deomote from admin</th>
+		<th>delete user</th>
+	</tr>
+
+	{% for user in users %}
+  	<tr>
+  		<td>{{user.id}}</td>
+		<td>{{user.first_name}}</td>
+		<td>{{user.last_name}}</td>
+		<td>{{user.email}}</td>
+		<td>{{user.password}}</td>
+		<td>{{user.admin}}</td>
+		<td><a class="btn btn-success" href="/make_user_admin/{{user.email}}">promote</a></td>
+		<td><a class="btn btn-warning" href="/demote_user_admin/{{user.email}}">demote</a></td>
+		<td><a class="btn btn-danger" href="/remove_user/{{user.email}}">remove user</a></td>
+	</tr>
+	{% endfor %}
+</table>
+
+
+</body>
+</html> 

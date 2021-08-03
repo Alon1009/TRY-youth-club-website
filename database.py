@@ -1,4 +1,4 @@
-from model import Base, Make_account, Create_workshop, People_in_workshop_ids
+from model import Base, Make_account, Create_workshop, Registered_users
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
