@@ -12,3 +12,19 @@ class Make_account(Base):
     email = Column(String)
     password = Column(String)
     admin = Column(Boolean)
+
+
+class Create_workshop(Base):
+	__tablename__ = 'add_workshop'
+	id = Column(Integer, primary_key=True)
+	workshop_name = Column(String)
+	details = Column(String)
+	pictures = Column(String)
+
+
+
+class People_in_workshop_ids(Base):
+	__tablename__ = "people_ids"
+	id = Column(Integer, primary_key=True)
+	workshop_id = Column(Integer)
+	user_id = Column(Integer)
