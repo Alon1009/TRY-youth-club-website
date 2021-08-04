@@ -240,7 +240,6 @@ def log_out():
 def admin_page_1():
     global email
     global login
-    global admin
     users = get_all_users()
     workshops = get_all_workshops()
     return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
