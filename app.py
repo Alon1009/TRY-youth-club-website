@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_mail import Mail
 from flask_mail import Message
 
-engine = create_engine('sqlite:///database.db')
+engine = create_engine('sqlite:///database.db', connect_args={'check_same_thread': False})
 Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -140,7 +140,7 @@ def login_2():
         password = request.form['password']
         email = login_email
         if get_account(login_email) is None:
-            return render_template('login.html', login=login, wmail=email, login_info=False)
+            return render_template('login.html', login=login, email=email, login_info=False)
         else:
             isAdmin = get_account(email).admin
             if password == get_account(login_email).password:
@@ -189,11 +189,11 @@ def sign_up():
 def news():
     global email
     global login
-    workshop_name = "test"
+    workshops = get_all_workshops()
     if request.method == 'POST':
-        return render_template('news.html', login=login, email=email,name=workshop_name)
+        return render_template('news.html', login=login, email=email, workshops=workshops)
     else:
-        return render_template('news.html', login=login, email=email, name=workshop_name)
+        return render_template('news.html', login=login, email=email, workshops=workshops)
 
 @app.route('/add_workshop', methods=['GET', 'POST'])
 def add_workshop():
@@ -240,6 +240,7 @@ def log_out():
 def admin_page_1():
     global email
     global login
+    global admin
     users = get_all_users()
     workshops = get_all_workshops()
     return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
