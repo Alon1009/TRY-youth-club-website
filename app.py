@@ -129,6 +129,14 @@ def home():
     return render_template('index.html', login=login, email=email, admin=isAdmin)
 
 
+@app.route('/donate', methods=['GET'])
+def donate():
+    global email
+    global login
+    global isAdmin
+    return render_template('donate.html', login=login, email=email, admin=isAdmin)
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def login():
     global email

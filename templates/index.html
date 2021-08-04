@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <!-- site metas -->
-  <title>mind</title>
+  <title>TRY</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -29,6 +29,47 @@
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  <style>
+.mean-last a:hover{
+box-shadow: 1pt 2pt 1pt 3pt blue;
+padding: 25px;
+transition: all 0.9s;
+}      
+
+.name {
+    color: blue
+}
+
+.work {
+    font-weight: bold;
+    font-size: 15px
+}
+
+.about span {
+    font-size: 13px
+}
+
+.v-profile {
+    color: blue;
+    cursor: pointer
+}
+
+.box {
+    -webkit-box-shadow: 13px 12px 5px -10px rgba(196, 194, 196, 0.72);
+    -moz-box-shadow: 13px 12px 5px -10px rgba(196, 194, 196, 0.72);
+    box-shadow: 13px 12px 5px -10px rgba(196, 194, 196, 0.72)
+}
+
+.col-md-3 {
+    margin-top: 10px
+}
+
+  </style>
+
+
+
+
+
 </head>
 <!-- body -->
 
@@ -44,49 +85,64 @@
     <div class="header-top">
       <div class="header">
         <div class="container-fluid">
-          <div class="row">
+          <div class="row_1">
             <div class="col-xl-2 col-lg-4 col-md-4 col-sm-3 col logo_section">
               <div class="full">
                 <div class="center-desk">
                   <div class="logo">
-                    <a href="index.html"><img src="static/images/logo.png" alt="#" /></a>
+                    <img src="static/images/logo-removebg-preview.png" alt="#" style="width:180px;height: 140px;position:relative;right:425%;" />
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-10 col-lg-8 col-md-8 col-sm-9">
-              <div class="header_information">
+              <div class="header_information" style="height: 100%;">
                <div class="menu-area">
-                <div class="limit-box">
-                  <nav class="main-menu ">
+                <div class="limit-box" align="center" style="align-content: center;">
+                  <nav class="main-menu " align="center" style="align-content: center; float: right;">
+                    <style>
+                    .menu-area-main a{
+                      color: black !important;
+                      margin-left: 20px; 
+                      background-color: lime;
+                      border-radius: 15px 25px;
+                      width:  120px;
+                      text-align: center;
+                    }
+                    .menu-area-main a:hover{
+                      width: 130px !important;
+                      border: 2px solid green;
+                      transition: all 0.8s;
+                    }
+                  </style>
                     <ul class="menu-area-main">
-                      <li class="active"> <a href="/home">Home</a> </li>
-                      <li> <a href="#about">About us</a> </li>
-                      <li> <a href="/news">WorkShops</a> </li>
-                      <li> <a href="#contact">Contact</a> </li>
+                      <li class="active"> <a style="background-color: #B0F2B4;" href="/home">Home</a> </li>
+                      <li> <a href="#about" style="background-color: #B0F2B4;">About us</a> </li>
+                      <li> <a href="/news" style="background-color: #B0F2B4;">WorkShop</a> </li>
+                      <li> <a href="#team" style="background-color: #B0F2B4;">Team</a> </li>
+                      <li> <a href="#contact" style="background-color: #B0F2B4;">Contact</a> </li>
+                      <li> <a href="/donate" style="background-color: #B0F2B4;">Donate</a> </li>
                       {% if admin == True %}
-                      <li> <a href="/admin_page_page">Admin</a> </li>
+                      <li> <a href="/admin_page_page" style="background-color: #B0F2B4;">Admin</a> </li>
                       {% endif %}
                       {% if login == False %}
-                      <li> <a href="/login">Login</a> </li>
+                       <li><a href="/login" style="background-color: #B0F2B4;border-radius:10px 20px;border:3px solid black;color:black;padding:15px;">login/sing up</a> </li>          
                       {% endif %}
                       {% if login == True %}
-                      <li> <a href="/log_out">Log out</a> </li>
+                      <li><a href="/log_out" style="background-color:#B0F2B4;border-radius:10px 20px;border:3px solid black;color:black;padding:15px;">logout</a></li>
                       {% endif %}
-                      <li> <a href="/"></a> </li>     
+                      
+
                      </ul>
                    </nav>
                  </div>
                </div> 
-               <div class="mean-last">
-                <center>
-                      {% if login == False %}
-                       <a href="/login">login</a>            
-                      {% endif %}
-                      {% if login == True %}
-                      <a href="/log_out">logout</a>
-                      {% endif %}
-                </center></div>
+               <style>
+
+             </style>
+              <div class="mean-last">
+
+                </div> 
+             
              </div>
            </div>
          </div>
@@ -107,12 +163,12 @@
 
             <div class="container-fluid padding_dd">
               <div class="carousel-caption">
-                <div class="row">
+                <div class="row_1">
                   <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
                     <div class="text-bg">
                       <h1>TRY</h1>
-                      <p>Tommorrow's Renessance youth</p>
-                      <a href="#">Read more</a> <a href="#">Donate</a>
+                      <p style="font-size:25px;text-align:center;">TRY is a nonprofit startup tackling widespread violence in communities</p>
+                       <a href="/donate">Donate</a>
                     </div>
                   </div>
                   <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -129,12 +185,12 @@
             <div class="container-fluid padding_dd">
               <div class="carousel-caption">
 
-                <div class="row">
+                <div class="row_1">
                   <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
                     <div class="text-bg">
                       <h1>TRY</h1>
-                      <p>Tommorrow's Renessance youth</p>
-                      <a href="#">Read more</a> <a href="#">Donate</a>
+                      <p>TRY is a nonprofit startup tackling widespread violence in communities</p>
+                       <a href="/donate">Donate</a>
                     </div>
                   </div>
 
@@ -154,12 +210,12 @@
 
             <div class="container-fluid padding_dd">
               <div class="carousel-caption ">
-                <div class="row">
+                <div class="row_1">
                   <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
                     <div class="text-bg">
                       <h1>TRY</h1>
-                      <p>Tommorrow's Renessance youth</p>
-                      <a href="#">Read more</a> <a href="#">Donate</a>
+                      <p>TRY is a nonprofit startup tackling widespread violence in communities</p>
+                       <a href="/donate">Donate</a>
                     </div>
                   </div>
                   <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
@@ -191,23 +247,49 @@
 
 
 <!-- about  -->
-<div id="about" class="about">
+<div id="about" class="about" style="margin:15px auto; display:block;">
   <div class="container">
-    <div class="row">
+    <div class="row_1">
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
         <div class="about-box">
-          <h2>About <strong class="yellow">Our Game</strong></h2>
-          <p> orem ipsum dolor sit amet, consectetur adipisicing elit. Quas voluptatem maiores eaque similique non distinctio voluptates perspiciatis omnis, repellendus ipsa aperiam, laudantium voluptatum nulla?.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, assumenda, vo
-          luptatum. Libero eligendi molestias iure error animi totam laudantium, aspernatur similique id eos at consectetur illo culpa,  </p>
-          <a href="Javascript:void(0)">Read more</a>
+          <h2>What<strong class="yellow">  does try do</strong></h2>
+          <p>TRY is a nonprofit startup tackling widespread violence in communities. We provide high school students with a multidimensional curriculum, giving youth the tools and skills to reduce violence and crime in their own neighborhoods.,  </p>
         </div>
       </div>
       <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
         <div class="about-box">
-          <figure><img src="static/images/about.jpg" alt="#" /></figure>
+          <figure><img src="static/images/club1.jpeg" alt="#" /></figure>
         </div>
       </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div id="about" class="about" style="margin:15px auto; display:block;">
+  <div class="container">
+    <div class="row_1">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="about-box">
+          <figure><img src="static/images/third.jpeg" alt="" /></figure>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="about-box">
+          <h2>Where <strong class="yellow">we will start</strong></h2>
+          <p> We will start in Nazareth, a densely populated area with a lot of violence and crime. We believe it is a great place for TRY to start developing a youth club. Through this, the youth of Nazareth can have a safe space for them to attend and interact with many other teens, as well as experience a unique multidimensional curriculum. At the beginning of our startup, we will open a youth club in Nazareth hosting 30 high school students who are social leaders in the community and will experience different fun, educational, and anti-violence centered activities during their time at the club.
+,  </p>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -215,72 +297,190 @@
 <!-- end abouts -->
 
 
-
 <!-- our -->
 
 <!-- end our -->
 <!-- Courses -->
 <div id="courses" class="Courses">
-  <div class="container-fluid padding_left3">
-    <div class="row">
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-        <div class="box_bg">
-          <div class="box_bg_img">
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="box_my">
-                  <figure><img src="static/images/my1.jpg"></figure>
-                  <div class="overlay">
-                    <h3>Data Structures</h3>
-                    <p>It is a long established fact that a reader will be distracted by the readable content o</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="box_my">
-                  <figure><img src="static/images/my2.jpg"></figure>
-                  <div class="overlay">
-                    <h3>Cinematography</h3>
-                    <p>It is a long established fact that a reader will be distracted by the readable content o</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="box_my">
-                  <figure><img src="static/images/my3.jpg"></figure>
-                  <div class="overlay">
-                    <h3>Skills</h3>
-                    <p>It is a long established fact that a reader will be distracted by the readable content o</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="box_my">
-                  <figure><img src="static/images/my4.jpg"></figure>
-                  <div class="overlay">
-                    <h3>Teaching Science</h3>
-                    <p>It is a long established fact that a reader will be distracted by the readable content o</p>
-                  </div>
-                </div>
-              </div>
+  
 
-
-
+<div class="container text-center mt-5 mb-2" id="team">
+    <h1 class="mb-0">Meet our agents</h1><span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</span>
+</div>
+<div class="container mt-3">
+    <div class = "flex-container">
+    <div class="row_1" >
+        <div class="col-md-3 col-xl-3" >
+            <div class="bg-white p-3 text-center rounded box" style="height:500px;">
+              <img class="img-responsive rounded-circle" src="static/images/team/firas.JPG" width="90">
+                <h5 class="mt-3 name">Firas Khalifa</h5>
+                <span class="work d-block"> Product Manger</span>
+                <span class="work d-block"> Umm al Fahem</span>
+                <div class="mt-4 about">
+                  <span>As a high schooler student who studies in Nazareth and part of the Arab community I feel the importance of having a place where youth can belong. My Passion and motivation towards TRY stems from my personal life experiences and my desire to impact.</span>
+                </div>
+                <div class="mt-4">
+                </div>
             </div>
-          </div>
         </div>
+        <div class="col-md-3 col-xl-3" >
+            <div class="bg-white p-3 text-center rounded box" style="height:500px;">
+              <img class="img-responsive" style="border-radius:50%;" src="static/images/team/wadi.JPG" width="90">
+                <h5 class="mt-3 name">Wadi Naoum</h5>
+                <span class="work d-block"> User  Experience</span>
+                <span class="work d-block">Jerusalem</span>
+                <div class="mt-4 about">
+                  <span>Living in Jerusalem and experiencing violence and seeing it all around me really connected me to the problem that TRY is tackling, and I hope that together we can make a change and make the youth of today the community of tomorrow</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xl-3" >
+            <div class="bg-white p-3 text-center rounded box" style="height:500px;"> 
+              <img class="img-responsive rounded-circle" src="static/images/team/jona.JPG" width="90">
+                <h5 class="mt-3 name">Juna Azzam</h5>
+                <span class="work d-block">User Experience</span>
+                <span class="work d-block">Nazareth</span>
+                <div class="mt-4 about">
+                  <span>Violence is becoming a major issue that needs to end. In TRY, the change begins with the younger generation which can guarantee a future generation that is equipped with the right peaceful tools that will help us fight for the future we deserve.</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <div class="bg-white p-3 text-center rounded box" style="height:500px;">
+              <img class="img-responsive rounded-circle" src="static/images/team/roni.JPG" width="90">
+                <h5 class="mt-3 name">Roni</h5>
+                <span class="work d-block">User Experience</span>
+                <span class="work d-block"></span>
+                <div class="mt-4 about">
+                  <span>is a long established fact that eader&nbsp; will be distracted by the readable content.</span>
+                </div>
+            </div>
+        </div>        
       </div>
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 border_right">
-        <div class="box_text">
-          <div class="titlepage">
-            <h2>My <strong class="yellow"> Courses</strong></h2>
-          </div>
-          <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-          <a href="Javascript:void(0)">Read more</a>
-        </div>
-      </div> 
     </div>
-  </div>
+    <div class="flex-container">
+    <div class="row_1" style="display:flex;justify-content:space-between">   
+            <div class="bg-white p-3 text-center rounded box" style="width:25%;">
+              <img class="img-responsive rounded-circle" src="static/images/team/ron.JPG" style="height:120px;">
+                <h5 class="mt-3 name">Ron Hemo</h5>
+                <span class="work d-block">Developer</span>
+                <span class="work d-block">Givat Avni</span>
+                <div class="mt-4 about">
+                  <span>Try is trying to reduce violence in youth communities and I think it's an amazing goal that needs to be solved</span>
+                </div>
+                <div class="mt-4">
+                </div>
+             </div>
+            <div class="bg-white p-3 text-center rounded box" style="width:25%;">
+              <img class="img-responsive rounded-circle" src="static/images/team/ahmad.JPG" width="90">
+                <h5 class="mt-3 name">Ahmad Muhtaseb</h5>
+                <span class="work d-block">Developer</span>
+                <span class="work d-block">Jersualem</span>
+                <div class="mt-4 about">
+                  <span> Violence is one of the worst things that Arab society faces, so i am in (Try) trying to solve this problem</span>
+                </div>
+                <div class="mt-4">
+                </div>
+        </div>
+            <div class="bg-white p-3 text-center rounded box" style="width:25%;">
+              <img class="img-responsive rounded-circle" src="static/images/team/alon.JPG" width="90">
+                <h5 class="mt-3 name">Alon Bitan</h5>
+                <span class="work d-block">Developer</span>
+                <span class="work d-block">Dvora</span>
+                <div class="mt-4 about">
+                  <span>What motivates me is that the problem is a real problem that people suffer from and I want to TRY and change that</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+      </div>
+      </div>
+      <div class="flex-container">
+    <div class="row_1" style="display:flex;justify-content:space-between">   
+            <div class="bg-white p-3 text-center rounded box" style="width:25%;">
+              <img class="img-responsive rounded-circle" src="static/images/team/leen.JPG" style="height:120px;">
+                <h5 class="mt-3 name">Leen Elias</h5>
+                <span class="work d-block">Designer</span>
+                <span class="work d-block">Nazareth</span>
+                <div class="mt-4 about">
+                  <span>I care about my future and about my community’s future</span>
+                </div>
+                <div class="mt-4">
+                </div>
+             </div>
+            <div class="bg-white p-3 text-center rounded box" style="width:25%;">
+              <img class="img-responsive rounded-circle" src="static/images/team/raghad.JPG" width="90">
+                <h5 class="mt-3 name">Raghad Abadi</h5>
+                <span class="work d-block">Designer</span>
+                <span class="work d-block">Kafar qara</span>
+                <div class="mt-4 about">
+                  <span>where i live i can hear shooting every night and it doesn't stop, that make me feel unsafe and i'm willing to change the situation to give everyone a chance to live in a better place</span>
+                </div>
+                <div class="mt-4">
+                </div>
+        </div>
+            <div class="bg-white p-3 text-center rounded box" style="width:25%;">
+              <img class="img-responsive rounded-circle" src="static/images/team/nardeen.JPG" width="90">
+                <h5 class="mt-3 name">Nardeen Nasser</h5>
+                <span class="work d-block">Designer</span>
+                <span class="work d-block">Haifa</span>
+                <div class="mt-4 about">
+                  <span>I believe in our startup and in our ability to make a change</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+      </div>
+      </div>
+     <!--  <div class="flex-container">
+      <div class="row w-100" style="display:flex;justify-content:space-between">    
+        <div class="col-xl-4 col-md-4 col-lg-4" style="width:25%;height:200px;">
+            <div class="bg-white p-3 text-center rounded box">
+              <img class="img-responsive rounded-circle" src="images/team/nardeen.jpg" width="90">
+                <h5 class="mt-3 name">Nardeen</h5>
+                <span class="work d-block">Desinger</span>
+                <span class="work d-block"></span>
+                <div class="mt-4 about">
+                  <span>is a long established fact that eader&nbsp; will be distracted by the readable content.</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-lg-4" style="width:25%;">
+            <div class="bg-white p-3 text-center rounded box">
+              <img class="img-responsive rounded-circle" src="images/team/leen.jpg" width="90">
+                <h5 class="mt-3 name">Leen Elias</h5>
+                <span class="work d-block">Desinger</span>
+                <span class="work d-block"></span>
+                <div class="mt-4 about">
+                  <span>I care about my future and about my community’s future</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-4 col-lg-4" style="width:25%;">
+            <div class="bg-white p-3 text-center rounded box">
+              <img class="img-responsive rounded-circle" src="images/team/Raghad.jpg" width="90">
+                <h5 class="mt-3 name">Raghad Abadi </h5>
+                <span class="work d-block">Desinger</span>
+                <span class="work d-block"> Kafar qara</span>
+                <div class="mt-4 about">
+                  <span>where i live i can hear shooting every night and it doesn't stop, that make me feel unsafe and i'm willing to change the situation to give everyone a chance to live in a better place</span>
+                </div>
+                <div class="mt-4">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> -->
+</div>
+
 </div>
 <!-- end Courses -->
 
@@ -288,28 +488,16 @@
 
 
 
-<!-- end MAKE --> 
-<!-- end learn --> 
-
 
 <!-- contact -->
-<div id="contact" class="contact">
+<div id="contact" class="contact" class="lol" style="margin-bottom:-126px;">
   <div class="container-fluid padding_left2">
     <div class="white_color">
-      <div class="row">
-
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-          <div id="map">
-          </div>
-
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-
+      <div align="center" style="position: centered;">
           <form class="contact_bg">
-            <div class="row">
-              <div class="col-md-12">
+            <div>
                 <div class="titlepage">
-                  <h2>Contact <strong class="yellow">us</strong></h2>
+                  <h2 align="center">Contact <strong class="yellow">us</strong></h2>
                 </div>
                 <div class="col-md-12">
                   <input class="contactus" placeholder="Your Name" type="text" name="Your Name">
@@ -323,49 +511,30 @@
                 <div class="col-md-12">
                   <textarea class="textarea" placeholder="Message" type="text" name="Message"></textarea>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                  <button class="send">Send</button>
+                <div align="center" class="col-md-12">
+                  <button align="center" class="send">Send</button>
                 </div>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-
       </div>
     </div>
-
+</div>
     <!-- end contact -->
 
     <!--  footer -->
-    <footr>
+    <footer>
       <div class="footer ">
         <div class="container">
-          <div class="row">
+          <div class="row_1">
 
-            <div class="col-md-12">
-              <form class="news">
-                <input class="newslatter" placeholder="Email" type="text" name=" Email">
-                <button class="submit">Subscribe</button>
-              </form>
-            </div>
-            <div class="col-md-12">
-              <h2>Newsletter</h2>
-              <span>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in  </span>
-            </div>
+           
+         
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
-              <div class="row">
+              <div class="row_1">
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 ">
                   <div class="address">
-                    <h3>Contact us </h3>
-                    <ul class="loca">
-                      <li>
-                        <a href="#"><img src="static/icon/loc.png" alt="#" /></a>London 145
-                        <br>United Kingdom </li>
-                        <li>
-                          <a href="#"><img src="static/icon/email.png" alt="#" /></a>demo@gmail.com </li>
-                          <li>
-                            <a href="#"><img src="static/icon/call.png" alt="#" /></a>+12586954775 </li>
-                          </ul>
+                     
                           <ul class="social_link">
                             <li><a href="#"><img src="static/icon/fb.png"></a></li>
                             <li><a href="#"><img src="static/icon/tw.png"></a></li>
@@ -375,36 +544,9 @@
 
                         </div>
                       </div>
-                      <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="address">
-                          <h3>Courses</h3>
-                          <ul class="Menu_footer">
-                            <li class="active"> <a href="#">Masters Degree</a> </li>
-                            <li><a href="#">Post GraduateU</a> </li>
-                            <li><a href="#">Ndergraduate</a> </li>
-                            <li><a href="#">Engineering</a> </li>
-                            <li><a href="#">Ph.D Degree</a> </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="address">
-                          <h3>Information</h3>
-                          <ul class="Links_footer">
-                            <li class="active"><a href="#">Campus Tour</a> </li>
-                            <li><a href="#">Student Lifes</a> </li>
-                            <li><a href="#">Cholarship</a> </li>
-                            <li><a href="#"> Admission</a> </li>
-                            <li><a href="#">Leadership</a> </li>
-                          </ul>
-                        </div>
-                      </div>
+       
 
-                      <div class="col-lg-3 col-md-6 col-sm-6 ">
-                        <div class="address">
-                          <a href="index.html"> <img src="static/images/logo1.jpg" alt="logo"></a>
-                        </div>
-                      </div>
+           
                     </div>
                   </div>
 
@@ -413,7 +555,7 @@
               </div>
               
             </div>
-          </footr>
+          </footer>
           <!-- end footer -->
           <!-- Javascript files-->
           <script src="static/js/jquery.min.js"></script>
@@ -430,29 +572,8 @@
           <script>
 // This example adds a marker to indicate the position of Bondi Beach in Sydney,
 // Australia.
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 11,
-    center: {
-      lat: 40.645037,
-      lng: -73.880224
-    },
-  });
 
-  var image = 'static/images/maps-and-flags.png';
-  var beachMarker = new google.maps.Marker({
-    position: {
-      lat: 40.645037,
-      lng: -73.880224
-    },
-    map: map,
-    icon: image
-  });
-}
 </script>
-<!-- google map js -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
-<!-- end google map js -->
 
 
 
