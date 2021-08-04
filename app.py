@@ -10,7 +10,7 @@ Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-from flask import Flask, jsonify, request, render_template, url_for, redirect
+from flask import Flask, jsonify, request, render_template, url_for, redirect, flash
 import random
 import requests, json
 
@@ -24,9 +24,9 @@ app.config['TESTING'] = False
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'naztry.club@gmail.com'
-app.config['MAIL_PASSWORD'] = 'try.club(2021)'
-app.config['MAIL_DEFAULT_SENDER'] = ('TRY', 'naztry.club@gmail.com')
+app.config['MAIL_USERNAME'] = 'try.club2021@gmail.com'
+app.config['MAIL_PASSWORD'] = 'TryClub2021'
+app.config['MAIL_DEFAULT_SENDER'] = ('TRY', 'try.club2021@gmail.com')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_MAX_EMAILS'] = 1
@@ -47,7 +47,7 @@ def add_new_workshop(workshop_name, details, pictures):
     
 
 def register_to_workshop(workshop_id, user_id):
-    new_regsiter = Registered_users(workshop_id, user_id)
+    new_regsiter = Registered_users(workshop_id=workshop_id, user_id=user_id)
     session.add(new_regsiter)
     session.commit()
 
@@ -64,6 +64,11 @@ def delete_workshop(workshop_id):
     session.commit()
 
 
+def delete_register(register_id):
+    session.query(Registered_users).filter_by(id=register_id).delete()
+    session.commit()
+
+
 def get_all_users():
     users = session.query(Make_account).all()
     return users
@@ -72,6 +77,18 @@ def get_all_users():
 def get_all_workshops():
     workshops = session.query(Create_workshop).all()
     return workshops
+
+
+def get_all_registered():
+    registered = session.query(Registered_users).all()
+    return registered
+
+def get_all_registered_by_id(workshop_id):
+    registered = session.query(
+        Registered_users).filter_by(
+        workshop_id=workshop_id).all()
+    return registered
+
 
 
 def get_account(their_email):
@@ -96,6 +113,13 @@ def update_admin(user, isActuallyAdmin):
     session.commit()
 
 
+def update_workshop_1(workshop, workshop_name, details, pictures):
+    workshop.workshop_name = workshop_name
+    workshop.details = details
+    workshop.pictures = pictures
+    session.commit()
+
+
 @app.route('/', methods=['GET'])
 def home():
     global email
@@ -109,7 +133,7 @@ def home():
 def login():
     global email
     global login
-    isAdmin = False
+    global isAdmin
     if login != True:
         login = False
     if request.method == 'POST':
@@ -135,6 +159,7 @@ def login():
 def login_2():
     global email
     global login
+    global isAdmin
     if request.method == 'POST':
         login_email = request.form['email']
         password = request.form['password']
@@ -160,6 +185,7 @@ def login_2():
 def sign_up():
     global email
     global login
+    global isAdmin
     if request.method == 'POST':
         get_email = request.form['email']
         password = request.form['password']
@@ -167,7 +193,7 @@ def sign_up():
         last_name = request.form['last_name']
         email = get_email
         msg = Message("Hello", recipients=[email])         
-        msg.html = "<b>Hi there user \nWelcome!</b>"
+        msg.html = "<b>Hey!</b>\nYou have successfully signed up on our TRY website, by signing up you will be getting notifications on our latest news, upcoming events and workshops.\nWe are thrilled to share our amazing journey with you!\nFor more information you can reach out through this email: try.club2021@gmail.com"
         mail.send(msg)
         if email == "" or password == "" or first_name == "" or last_name == "":
             return render_template('sign_up.html', login=login, email=email, empty=False)
@@ -177,6 +203,7 @@ def sign_up():
             if get_account(email) is None:
                 login = True
                 adminValue = False
+                isAdmin = adminValue
                 sign_up_database(get_email, first_name, last_name, password, adminValue)
                 return render_template('index.html', login=login, email=email, login_info=True, admin=adminValue)
             else:
@@ -189,11 +216,18 @@ def sign_up():
 def news():
     global email
     global login
+    global isAdmin
+    user = ''
     workshops = get_all_workshops()
-    if request.method == 'POST':
-        return render_template('news.html', login=login, email=email, workshops=workshops)
+    registered = get_all_registered()
+    if email == '':
+        user = ""
     else:
-        return render_template('news.html', login=login, email=email, workshops=workshops)
+        user = get_account(email)
+    if request.method == 'POST':
+        return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
+    else:
+        return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
 
 @app.route('/add_workshop', methods=['GET', 'POST'])
 def add_workshop():
@@ -211,18 +245,26 @@ def add_workshop():
         return render_template('add_workshop.html', login=login, email=email)
 
 
-@app.route('/register_to_workshop/<string:workshop_name>', methods=['GET', 'POST'])
-def register_workshop(workshop_name):
+@app.route('/register_to_a_workshop/<int:workshop_id>', methods=['GET', 'POST'])
+def register_workshop(workshop_id):
     global email
     global login
-    if login == True:
+    show = True
+    workshops = get_all_workshops()
+    print("emailllll", email)
+    if email != '':
+        user_id = get_account(email).id
+        registered = get_all_registered_by_id(workshop_id)
+        for register in registered:
+            if register.user_id == user_id:
+                show = False
+    if login == True and show:
         msg = Message("Hello", recipients=[email])
-        msg.html = "<b>Hi there user \nWelcome!</b>"
+        msg.html = "You have successfully registered for our upcoming workshop!\nThe workshop will be held in our youth club in Nazareth (TRY youth club), from 17:00 - 20:00.\nFor more information you can reach out through this email: try.club2021@gmail.com\nPlease confirm your coming by simply replying to this message.\nThank you!"
         mail.send(msg)
-    workshop_id = get_workshop("test").id
-    user_id = get_account(email).id
-    register_to_workshop(workshop_id, user_id)
-    return render_template('news.html', login=login, email=email)
+        user_id = get_account(email).id
+        register_to_workshop(workshop_id, user_id)
+    return redirect('/news')
 
 
 @app.route('/log_out', methods=['GET', 'POST'])
@@ -240,48 +282,44 @@ def log_out():
 def admin_page_1():
     global email
     global login
+    global isAdmin
     users = get_all_users()
     workshops = get_all_workshops()
-    return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
+    registered = get_all_registered()
+    if isAdmin == True:
+        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops, admin=isAdmin, registered=registered)
+    else:
+        return render_template('index.html', login=login, email=email, admin=isAdmin)
 
 
 @app.route('/remove_user/<string:user_email>', methods=['GET'])
 def remove_user_from_database(user_email):
-    global email
-    global login
     delete_user(user_email)
-    users = get_all_users()
-    workshops = get_all_workshops()
-    return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
+    return redirect('/admin_page_page')
+
 
 @app.route('/make_user_admin/<string:user_email>', methods=['GET'])
 def make_user_admin(user_email):
-    global email
-    global login
     update_admin(get_account(user_email), True)
-    users = get_all_users()
-    workshops = get_all_workshops()
-    return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
+    return redirect('/admin_page_page')
 
 
 @app.route('/demote_user_admin/<string:user_email>', methods=['GET'])
 def demote_user_admin(user_email):
-    global email
-    global login
     update_admin(get_account(user_email), False)
-    users = get_all_users()
-    workshops = get_all_workshops()
-    return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
+    return redirect('/admin_page_page')
 
 
 @app.route('/remove_workshop/<string:workshop_id>', methods=['GET'])
 def delete_workshop_with_id(workshop_id):
-    global email
-    global login
     delete_workshop(workshop_id)
-    users = get_all_users()
-    workshops = get_all_workshops()
-    return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
+    return redirect('/admin_page_page')
+
+
+@app.route('/remove_register/<string:register_id>', methods=['GET'])
+def delete_register_with_id(register_id):
+    delete_register(register_id) 
+    return redirect('/admin_page_page')
 
 
 if __name__ == "__main__":  # Makes sure this is t

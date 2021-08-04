@@ -24,7 +24,7 @@ class Create_workshop(Base):
 
 
 class Registered_users(Base):
-	__tablename__ = "people_ids"
+	__tablename__ = 'people_ids'
 	id = Column(Integer, primary_key=True)
 	workshop_id = Column(Integer)
 	user_id = Column(Integer)
