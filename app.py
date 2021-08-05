@@ -13,6 +13,7 @@ session = DBSession()
 from flask import Flask, jsonify, request, render_template, url_for, redirect
 import random
 import requests, json
+import easygui
 
 app = Flask(  # Create a flask app
     __name__,
@@ -38,6 +39,11 @@ mail = Mail(app)
 login = False
 isAdmin = False
 email = ""
+
+
+def Mbox(title, text):
+    return easygui.msgbox(text, title)
+
 
 
 def add_new_workshop(workshop_name, details, pictures):
@@ -284,6 +290,10 @@ def register_workshop(workshop_id):
         mail.send(msg)
         user_id = get_account(email).id
         register_to_workshop(workshop_id, user_id)
+    elif show == False:
+        Mbox('Attention', 'you already signed to this workshop')
+    elif login == False:
+        Mbox('Attention', 'you are not logged in to an account')
     return redirect('/news')
 
 
