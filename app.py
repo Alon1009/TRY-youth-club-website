@@ -124,6 +124,7 @@ def update_workshop_1(workshop, workshop_name, details, pictures):
 def home():
     global email
     global login
+    global isAdmin
     login = False
     isAdmin = False
     return render_template('index.html', login=login, email=email, admin=isAdmin)
