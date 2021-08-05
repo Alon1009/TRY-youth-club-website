@@ -180,7 +180,7 @@ def login_2():
             if password == get_account(login_email).password:
                 print("login successful")
                 login = True
-                return render_template('index.html', login=login, email=email, admin=isAdmin)
+                return redirect('/home')
             else:
                 print("login info incorrect")
                 return render_template('login.html', login=login, login_info=False)
@@ -214,7 +214,7 @@ def sign_up():
                 adminValue = False
                 isAdmin = adminValue
                 sign_up_database(get_email, first_name, last_name, password, adminValue)
-                return render_template('index.html', login=login, email=email, login_info=True, admin=adminValue)
+                return redirect('/home')
             else:
                 return render_template('sign_up.html', login=login, email=email, exists=False)
     else:
@@ -238,6 +238,21 @@ def news():
     else:
         return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
 
+
+@app.route('/admin_page_page', methods=['GET'])
+def admin_page_1():
+    global email
+    global login
+    global isAdmin
+    users = get_all_users()
+    workshops = get_all_workshops()
+    registered = get_all_registered()
+    if isAdmin == True:
+        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops, admin=isAdmin, registered=registered)
+    else:
+        return redirect('/home')
+
+
 @app.route('/add_workshop', methods=['GET', 'POST'])
 def add_workshop():
     global email
@@ -249,7 +264,7 @@ def add_workshop():
         add_new_workshop(workshop_name, workshop_details, workshop_pictures)
         users = get_all_users()
         workshops = get_all_workshops()
-        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops)
+        return redirect('/admin_page_page')
     else:
         return render_template('add_workshop.html', login=login, email=email)
 
@@ -282,23 +297,9 @@ def log_out():
     global login
     login = False
     if request.method == 'POST':
-        return render_template('index.html', login=login, email=email)
+        return redirect('/home')
     else:
-        return render_template('index.html', login=login, email=email)
-
-
-@app.route('/admin_page_page', methods=['GET'])
-def admin_page_1():
-    global email
-    global login
-    global isAdmin
-    users = get_all_users()
-    workshops = get_all_workshops()
-    registered = get_all_registered()
-    if isAdmin == True:
-        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops, admin=isAdmin, registered=registered)
-    else:
-        return render_template('index.html', login=login, email=email, admin=isAdmin)
+        return redirect('/home')
 
 
 @app.route('/remove_user/<string:user_email>', methods=['GET'])
