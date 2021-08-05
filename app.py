@@ -226,11 +226,11 @@ def news():
     global email
     global login
     global isAdmin
-        workshops = get_all_workshops()
-        if request.method == 'POST':
-            return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
-        else:
-            return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
+    workshops = get_all_workshops()
+    if request.method == 'POST':
+        return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
+    else:
+        return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
 
 
 
