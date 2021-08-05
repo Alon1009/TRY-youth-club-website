@@ -10,52 +10,37 @@
 </head>
 <body style="background-image: url(https://static.vecteezy.com/system/resources/thumbnails/001/361/538/small/orange-watercolor-background-free-vector.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
 
-<a href="/"><img src="static/images/Home-Button.png" style="width:4%; height: 4%;" align="right"></a>
+<a href="/home"><img src="static/images/Home-Button.png" style="width:4%; height: 4%;" align="right"></a>
 
-
-{% if login == True %}
-    <div class="row">
-        <a class="col-md-1 niceButton" href="/log_out">Log out</a>
-        <div class="col-md-11"></div>
-    </div>
-{% endif %}
-
-{% if login == False %}
-    <div class="login-box">
-        <h2>Login</h2>
-        <form action="/home" method = "POST">
-            <div class="user-box">
-                <input type="text" name="email" required="">
-                <label>Email</label>
-            </div>
-            <div class="user-box">
-                <input type="password" name="password" required="">
-                <label>Password</label>
-            </div>
-            <a style="color: white;" href="" onclick="this.closest('form').submit();return false;">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            Submit
-            </a>
-            {% if not login %}
-            <a style="color: white;" href="/sign_up">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            Sign up
-            </a>
-            {% endif %}
-        {% if login_info == False %}
-            <p style="color: white; font-size: 18px;">Login info incorrect</p>
-        {% endif %}
-        </form>
-    </div>
-{% endif %}
-<div>
-
+<div class="login-box">
+    <h2>Login</h2>
+    <form action="/home" method = "POST">
+        <div class="user-box">
+            <input type="text" name="email" required="">
+            <label>Email</label>
+        </div>
+        <div class="user-box">
+            <input type="password" name="password" required="">
+            <label>Password</label>
+        </div>
+        <a style="color: white;" href="" onclick="this.closest('form').submit();return false;">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        Submit
+        </a>
+        <a style="color: white;" href="/sign_up">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        Sign up
+        </a>
+    {% if login_info == False %}
+        <p style="color: white; font-size: 18px;">Login info incorrect</p>
+    {% endif %}
+    </form>
 </div>
 
 </body>
