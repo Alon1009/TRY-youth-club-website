@@ -287,15 +287,14 @@ def register_workshop(workshop_id):
     return redirect('/news')
 
 
-@app.route('/log_out', methods=['GET', 'POST'])
+@app.route('/log_out', methods=['GET'])
 def log_out():
     global email
     global login
+    global isAdmin
     login = False
-    if request.method == 'POST':
-        return redirect('/home')
-    else:
-        return redirect('/home')
+    isAdmin = False
+    return redirect('/home')
 
 
 @app.route('/remove_user/<string:user_email>', methods=['GET'])
