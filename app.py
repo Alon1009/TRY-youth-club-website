@@ -1,4 +1,4 @@
-from model import Base, Make_account, Create_workshop, Registered_users
+from model import Base, Make_account, Create_workshop, Registered_users, Create_news
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -46,6 +46,12 @@ def add_new_workshop(workshop_name, details, pictures):
     session.commit()
     
 
+def add_news(news_title, details, pictures):
+    new_news = Create_news(news_title=news_title, details=details, pictures=pictures)
+    session.add(new_news)
+    session.commit()
+
+
 def register_to_workshop(workshop_id, user_id):
     new_regsiter = Registered_users(workshop_id=workshop_id, user_id=user_id)
     session.add(new_regsiter)
@@ -64,6 +70,11 @@ def delete_workshop(workshop_id):
     session.commit()
 
 
+def delete_new(new_id):
+    session.query(Create_news).filter_by(id=new_id).delete()
+    session.commit()
+
+
 def delete_register(register_id):
     session.query(Registered_users).filter_by(id=register_id).delete()
     session.commit()
@@ -79,6 +90,11 @@ def get_all_workshops():
     return workshops
 
 
+def get_all_news():
+    workshops = session.query(Create_news).all()
+    return workshops
+
+
 def get_all_registered():
     registered = session.query(Registered_users).all()
     return registered
@@ -88,7 +104,6 @@ def get_all_registered_by_id(workshop_id):
         Registered_users).filter_by(
         workshop_id=workshop_id).all()
     return registered
-
 
 
 def get_account(their_email):
@@ -120,29 +135,12 @@ def update_workshop_1(workshop, workshop_name, details, pictures):
     session.commit()
 
 
-@app.route('/', methods=['GET'])
-def home():
-    global email
-    global login
-    global isAdmin
-    login = False
-    isAdmin = False
-    return render_template('index.html', login=login, email=email, admin=isAdmin)
-
-
-@app.route('/donate', methods=['GET'])
-def donate():
-    global email
-    global login
-    global isAdmin
-    return render_template('donate.html', login=login, email=email, admin=isAdmin)
-
-
 @app.route('/home', methods=['GET', 'POST'])
 def login():
     global email
     global login
     global isAdmin
+    news = get_all_news()
     if login != True:
         login = False
     if request.method == 'POST':
@@ -156,12 +154,30 @@ def login():
             if password == get_account(login_email).password:
                 print("login successful")
                 login = True
-                return render_template('index.html', login=login, email=email, admin=isAdmin)
+                return render_template('index.html', login=login, email=email, admin=isAdmin, news=news)
             else:
                 print("login info incorrect")
                 return render_template('login.html', login=login, login_info=False)
     else:
-        return render_template('index.html', login=login, email=email, admin=isAdmin)
+        return render_template('index.html', login=login, email=email, admin=isAdmin, news=news)
+
+
+@app.route('/', methods=['GET'])
+def home():
+    global email
+    global login
+    global isAdmin
+    login = False
+    isAdmin = False
+    return redirect('/home')
+
+
+@app.route('/donate', methods=['GET'])
+def donate():
+    global email
+    global login
+    global isAdmin
+    return render_template('donate.html', login=login, email=email, admin=isAdmin)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -221,18 +237,30 @@ def sign_up():
         return render_template('sign_up.html')
 
 
-@app.route('/news', methods=['GET', 'POST'])
-def news():
+@app.route('/workshops', methods=['GET'])
+def workshops():
     global email
     global login
     global isAdmin
     workshops = get_all_workshops()
-    if request.method == 'POST':
-        return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
-    else:
-        return render_template('news.html', login=login, email=email, workshops=workshops, admin=isAdmin)
+    return render_template('workshops.html', login=login, email=email, workshops=workshops, admin=isAdmin)
 
 
+@app.route('/news', methods=['GET'])
+def news():
+    global email
+    global login
+    global isAdmin
+    news = get_all_news()
+    return render_template('news.html', login=login, email=email, news=news, admin=isAdmin)
+
+
+@app.route('/embasider', methods=['GET'])
+def embasider():
+    global email
+    global login
+    global isAdmin
+    return render_template('embasiders.html', login=login, email=email, admin=isAdmin)
 
 
 @app.route('/admin_page_page', methods=['GET'])
@@ -243,8 +271,9 @@ def admin_page_1():
     users = get_all_users()
     workshops = get_all_workshops()
     registered = get_all_registered()
+    news = get_all_news()
     if isAdmin == True:
-        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops, admin=isAdmin, registered=registered)
+        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops, admin=isAdmin, registered=registered, news=news)
     else:
         return redirect('/home')
 
@@ -263,6 +292,20 @@ def add_workshop():
         return redirect('/admin_page_page')
     else:
         return render_template('add_workshop.html', login=login, email=email)
+
+
+@app.route('/add_news', methods=['GET', 'POST'])
+def add_the_news():
+    global email
+    global login
+    if request.method == 'POST':
+        news_title = request.form['news_title']
+        workshop_details = request.form['workshop_details']
+        workshop_pictures = request.form['workshop_pictures']
+        add_news(news_title, workshop_details, workshop_pictures)
+        return redirect('/admin_page_page')
+    else:
+        return render_template('add_news.html')
 
 
 @app.route('/register_to_a_workshop/<int:workshop_id>', methods=['GET', 'POST'])
@@ -284,7 +327,7 @@ def register_workshop(workshop_id):
         mail.send(msg)
         user_id = get_account(email).id
         register_to_workshop(workshop_id, user_id)
-    return redirect('/news')
+    return redirect('/workshops')
 
 
 @app.route('/log_out', methods=['GET'])
@@ -318,6 +361,12 @@ def demote_user_admin(user_email):
 @app.route('/remove_workshop/<string:workshop_id>', methods=['GET'])
 def delete_workshop_with_id(workshop_id):
     delete_workshop(workshop_id)
+    return redirect('/admin_page_page')
+
+
+@app.route('/remove_news/<string:news_id>', methods=['GET'])
+def delete_news_from_id(news_id):
+    delete_new(news_id)
     return redirect('/admin_page_page')
 
 

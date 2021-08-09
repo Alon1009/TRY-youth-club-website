@@ -28,3 +28,12 @@ class Registered_users(Base):
 	id = Column(Integer, primary_key=True)
 	workshop_id = Column(Integer)
 	user_id = Column(Integer)
+
+
+class Create_news(Base):
+	__tablename__ = 'add_news'
+	id = Column(Integer, primary_key=True)
+	news_title = Column(String)
+	details = Column(String)
+	pictures = Column(String)
+		
