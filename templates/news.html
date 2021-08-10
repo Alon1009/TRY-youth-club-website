@@ -71,12 +71,7 @@
 }
 
 
-p{
-    display: block; /* or inline-block, at least its a block element */
-    width: 18em; /* or width is certain by parent element */
-    height: auto; /* height cannot be defined */
-    white-space: normal; /* be sure its not 'nowrap'! ! ! :/ */
-}
+
 </style>
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -124,30 +119,29 @@ p{
           {% if login == True %}
           <a class="btn btn-danger" href="/log_out">log-out</a>
           {% endif %}
+    </div>
+  </div>
       </span>
     </div>
   </div>
 </nav>
+
 <div class="row">
 {% for new in news %}
 
-<div class="col-md-6" style="padding: 2em;">
-
-  <div class="newsContainer">
-    <div class="left">
-      <h1 class = "news_title"><b>{{new.news_title}}</b></h1> 
-      <p>{{new.details}}</p>
-    </div>
-    <div class="right">
-      <img src="{{new.pictures}}" >
+  <div class="col-lg-3" style="padding: 2em;">
+    <div class="newsContainer">
+        <h1 class = "news_title"><b>{{new.news_title}}</b></h1> 
+        <p>{{new.details}}</p>
     </div>
   </div>
-</div>
+  <div class="col-lg-3" style="padding-bottom: 2em;">
+      <img src="{{new.pictures}}" >
+  </div>
 
 {% endfor %}
-</div>
-</center>
 
+</div>
 
 <!-- Footer -->
 <footer class="bg-dark text-center text-white" id="contact">
