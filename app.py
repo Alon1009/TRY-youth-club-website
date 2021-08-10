@@ -192,10 +192,10 @@ def login_2():
         if get_account(login_email) is None:
             return render_template('login.html', login=login, email=email, login_info=False)
         else:
-            isAdmin = get_account(email).admin
             if password == get_account(login_email).password:
                 print("login successful")
                 login = True
+                isAdmin = get_account(email).admin
                 return redirect('/home')
             else:
                 print("login info incorrect")
@@ -291,7 +291,7 @@ def add_workshop():
         workshops = get_all_workshops()
         return redirect('/admin_page_page')
     else:
-        return render_template('add_workshop.html', login=login, email=email)
+        return render_template('add_workshop.html', login=login, email=email, admin=isAdmin)
 
 
 @app.route('/add_news', methods=['GET', 'POST'])
