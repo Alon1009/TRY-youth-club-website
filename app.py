@@ -150,10 +150,10 @@ def login():
         if get_account(login_email) is None:
             return render_template('login.html', login=login, email=email, login_info=False)
         else:
-            isAdmin = get_account(email).admin
             if password == get_account(login_email).password:
                 print("login successful")
                 login = True
+                isAdmin = get_account(email).admin
                 return render_template('index.html', login=login, email=email, admin=isAdmin, news=news)
             else:
                 print("login info incorrect")
@@ -255,8 +255,8 @@ def news():
     return render_template('news.html', login=login, email=email, news=news, admin=isAdmin)
 
 
-@app.route('/embasider', methods=['GET'])
-def embasider():
+@app.route('/ambassador', methods=['GET'])
+def ambassador():
     global email
     global login
     global isAdmin
