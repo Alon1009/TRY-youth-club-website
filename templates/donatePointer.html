@@ -1,41 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 70%;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-  padding: 2px 16px;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-</style>
-  <!-- Latest compiled and minified CSS -->
-  <!-- basic -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- mobile metas -->
@@ -45,9 +10,8 @@ html {
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="">
-  <!-- fevicon -->
   <link rel="icon" href="static/images/try.png" type="image/gif" />
-  <title>Workshops</title>
+  <title>Donate</title>
   <!-- bootstrap css -->
   <link rel="stylesheet" href="static/css/bootstrap.min.css">
   <!-- style css -->
@@ -61,19 +25,29 @@ html {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- font awsome icons -->
+  <title>Donate</title>
+  <!-- font awsome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style type="text/css">
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
+</style>
 </head>
+
 <body>
-    <!-- loader  -->
+  <!-- loader  -->
   <div class="loader_bg">
     <div class="loader"><img src="static/images/loading.gif" alt="#" /></div>
   </div>
-
-
 
 <div style="padding-bottom: 116px;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -96,9 +70,9 @@ html {
             <li><a class="dropdown-item" href="/ambassador">TRY Ambassadors</a></li>
           </ul>
         </li>
-        <li class="nav-item"><a href="/workshops" class="nav-link px-2 text-secondary">Workshops</a></li>
+        <li class="nav-item"><a href="/workshops" class="nav-link px-2 text-dark">Workshops</a></li>
         <li class="nav-item"><a href="/news" class="nav-link px-2 text-dark">News</a></li>
-        <li class="nav-item"><a href="/donatePointer" class="nav-link px-2 text-dark">Donate</a></li>
+        <li class="nav-item"><a href="/donatePointer" class="nav-link px-2 text-secondary">Donate</a></li>
         {% if admin == true %}
           <li class="nav-item"><a href="/admin_page_page" class="nav-link px-2 text-dark">Admin</a></li>
         {% endif %}
@@ -115,45 +89,39 @@ html {
     </div>
   </div>
 </nav>
-<center>
 
 <div class="row">
-{% for workshop in workshops %}
-
-<div class="col-md-6" style="padding-bottom: 30px;">
-<div class="card">
-  <img src="{{workshop.pictures}}" alt="Avatar">
-  <div class="container">
-    <h4><b>{{workshop.workshop_name}}</b></h4> 
-    <p>{{workshop.details}}</p>
-    <p style="font-size: 16px">Registers: {{registers_dict.get(workshop.id)}}/{{workshop.max_registers}}</p>
+  <div class="col-xl-3">
+    <center>
+    <img src="static/images/logoo.png">
+    </center>
+  </div>
+  <div class="col-xl-3">
+    <center>
+    <h1 style="padding-top: 10px;"><strong class="yellow">Donate to TRY</strong></h1>
+    <p style=" font-size: 16px;">Help us grow and make an actuall change</p>
+    <p style=" font-size: 16px;">Today's youth are tomorrow's community</p>
+    <p style=" font-size: 16px;">You are pointed to MEET's page of donations our mentors, which will transfer the money to us TRY</p>
 
     <a style="
-      font-size: 16px;
-      border: #F1D3C2 solid 1px;
-      background-color: #F1D3C2;
-      color: #000000;
-      padding-top: 10px;
-      padding-bottom: 5px;
-      padding-right: 30px;
-      padding-left: 30px;
-      transition: all 0.3s ease-in;" class="send" href="/register_to_a_workshop/{{workshop.id}}">Register</a>
-
-    {% if login == False %}
-    <p style="color:orange; font-size: 20px;"><img src="static/images/warn.png" width="30px"> sign in to register</p>
-    {% endif %}
-    {% if already_registered.get(workshop.id) == True and login == True %}
-    <p style="color:orange; font-size: 20px;"><img src="static/images/warn.png" width="30px"> already registered</p>
-    {% endif %}
+    font-size: 16px;
+    border: #F1D3C2 solid 1px;
+    background-color: #F1D3C2;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-right: 30px;
+    padding-left: 30px;
+    transition: all 0.3s ease-in;" target="_blank" href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=T8WMQ7CX7E56E" class = "btn btn-success">Donate</a>
+  </center>
+  </div>
+  <div style="padding-top: 10px;" class="col-xl-6">
+    <center>
+      <img src="static/images/sponserlvl.jpeg" alt="image">
+    </center>
   </div>
 </div>
 </div>
-
-{% endfor %}
-</div>
-</center>
-</div>
-
 
 <!-- Footer -->
 <footer style="padding-top: 40px; padding-bottom: 30px; bottom: 0px; margin: 0;" class="bg-dark text-center text-white footer" id="contact">
@@ -178,6 +146,8 @@ html {
       ><i class="material-icons" style="font-size:16px">place</i></a>
 </footer>
 <!-- end footer -->
+
+    <!-- Javascript files-->
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.bundle.min.js"></script>
@@ -189,7 +159,8 @@ html {
       <!-- javascript --> 
       <script src="static/js/owl.carousel.js"></script>
       <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-      <script >
+
+<script >
   var cc = document.getElementById("collapsecheck")
  var toggler = document.getElementById("navbartoggler")
  var team_btn = document.getElementById("team-btn")
@@ -214,5 +185,7 @@ html {
   }
  }
 </script>
+
+
 </body>
 </html>

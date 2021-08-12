@@ -33,6 +33,15 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
 <style type="text/css">
+    html {
+    position: relative;
+    min-height: 100%;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
   #about, #why_us, #contact{
     padding-top: 115px;
   }
@@ -62,10 +71,30 @@ p{
     height: auto; /* height cannot be defined */
     white-space: normal; /* be sure its not 'nowrap'! ! ! :/ */
 }
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+}
+
+.arrow-next:after
+{
+  content: '>';
+  font-size: 55px;
+  color: black;
+}
+
+.arrow-pre:after {
+  content: '<';
+  font-size: 55px;
+  color: black;
+}
+
 </style>
 
 </head>
 <body>
+
 
 <a class="gotopbtn" href="#"> <i class="fa fa-arrow-up"></i> </a>
   <!-- loader  -->
@@ -84,7 +113,7 @@ p{
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a href="/home" class="nav-link px-2 text-secondary">Home</a></li>
         <li class="nav-item"><a href="/home#about" class="nav-link px-2 text-dark">About us</a></li>
-        <li class="nav-item"><a href="/home#why_us" class="nav-link px-2 text-dark">Why us</a></li>
+        <li class="nav-item"><a href="/home#why_us" class="nav-link px-2 text-dark">Why TRY</a></li>
         <li class="nav-item dropdown">
           <a id="team-btn" class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Team</a>
           <ul id="team-show" class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -92,10 +121,9 @@ p{
             <li><a class="dropdown-item" href="/ambassador">TRY Ambassadors</a></li>
           </ul>
         </li>
-        <li class="nav-item"><a href="/home#contact" class="nav-link px-2 text-dark">Contact</a></li>
         <li class="nav-item"><a href="/workshops" class="nav-link px-2 text-dark">Workshops</a></li>
         <li class="nav-item"><a href="/news" class="nav-link px-2 text-dark">News</a></li>
-        <li class="nav-item"><a href="/donate" class="nav-link px-2 text-dark">Donate</a></li>
+        <li class="nav-item"><a href="/donatePointer" class="nav-link px-2 text-dark">Donate</a></li>
         {% if admin == true %}
           <li class="nav-item"><a href="/admin_page_page" class="nav-link px-2 text-dark">Admin</a></li>
         {% endif %}
@@ -120,30 +148,36 @@ p{
 
 
      <!-- end header -->
-
-     <!-- Start carousel -->
-   <center>
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="static/images/us.JPG" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="static/images/sec.jpeg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="static/images/third.jpeg" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-  </center>
-
+<center>
+<div class="row">
+  <div class="col-xl-3">
+  <img src="static/images/logoo.png">
+  </div>
+<div class="col-xl-9">
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="static/images/us.JPG" id="img1" class="d-block w-50" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="static/images/us2.JPG" id="img2" class="d-block w-50" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="static/images/us3.JPG" id="img3" class="d-block w-50" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="arrow-pre" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="arrow-next" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+  </div>
+</div>
+</div>
+</center>
 
 
 <!-- about  -->
@@ -153,7 +187,7 @@ p{
       <div class="col-lg-6">
         <div class="about-box">
           <div class="row">
-          <h2>What<strong class="yellow">  does try do</strong></h2>
+          <h2>What<strong class="yellow">  does TRY do</strong></h2>
           <p style="font-size:22px;">TRY is a nonprofit startup tackling widespread violence in communities. We provide high school students with a multidimensional curriculum, giving youth the tools and skills to reduce violence and crime in their own neighborhoods.</p>
           </div>
         </div>
@@ -181,7 +215,7 @@ p{
     <div class="row">
         <div class="col-lg-6">
         <div class="about-box">
-          <figure><img src="static/images/third.jpeg" alt="" /></figure>
+          <figure><img src="static/images/third.jpeg" alt="" style="padding-right: 12px;" /></figure>
         </div>
       </div>
       <div class="col-lg-6">
@@ -192,9 +226,7 @@ p{
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 <!-- end abouts -->
@@ -203,7 +235,7 @@ p{
 <!-- why us -->
 <div id="why_us">
   <center>
-    <h1 style="font-size: 50px; color: #f2e2ba;" >Why Us?</h1>
+    <h1 style="font-size: 50px; color: #f2e2ba;" >Why TRY?</h1>
     <div class="row">
       <div class="col-xl-4">
         <h2 class="yellow" > Teens for teens</h2>
@@ -212,14 +244,14 @@ p{
 
       </div>
       <div class="col-xl-4">
-        <h2 class="yellow"> Develop professional skills</h2>
+        <h3 class="yellow"> Develop professional skills</h3>
         <img src="static/images/pro.jpg">
         
 <p style="font-size:22px; padding-top: 1em; padding-bottom: 2em;">We introduce job professionals and present a whole employment based curriculum, which includes strong pre-professional training for the youth.</p>
 
       </div>
       <div class="col-xl-4">
-        <h2 class="yellow"> Vibrant and dynamic programs</h2>
+        <h4 class="yellow"> Vibrant and dynamic programs</h4>
         <img src="static/images/dynamic.jpeg" >
          
 <p style="font-size:22px; padding-top: 1em; padding-bottom: 2em;" >We offer different curriculums which include many fun activities, team-building exercises, and an anti-violence curriculum.</p>
@@ -356,7 +388,7 @@ p{
               <img class="img-responsive" style="border-radius:50%;" src="static/images/team/nardeen.JPG" width="90">
                 <h5 class="mt-3 name">Nardeen Nasser</h5>
                 <span class="work d-block"> Designer</span>
-                <span class="work d-block">Jersualem</span>
+                <span class="work d-block">Haifa</span>
                 <div class="mt-4 about">
                   <span>I believe in our startup and in our ability to make a change.</span>
                 </div>
@@ -368,80 +400,31 @@ p{
 </div>
 
 
-<!-- contact -->
-  <div id="contact" class="contact" class="lol" style="margin-bottom:-126px;">
-    <div class="container-fluid padding_left2">
-      <div class="white_color">
-        <div align="center" style="position: centered;">
-            <form action=”mailto:try.club2021@gmail.com” method="POST" enctype=”multipart/form-data” name=”EmailForm” class="contact_bg">
-                  <div class="titlepage">
-                    <h2 align="center">Contact <strong class="yellow">us</strong></h2>
-                  </div>
-                  <div class="row col-md-12">
-                    <input class="contactus" placeholder="Your Name" type="text" name="name">
-                  </div>
-                  <div class="row col-md-12">
-                    <input class="contactus" placeholder="Your Email" type="text" name="email">
-                  </div>
-                  <div class="row col-md-12">
-                    <input class="contactus" placeholder="Your Phone" type="text" name="phone">
-                  </div>
-                  <div class="row col-md-12">
-                    <input class="contactus" placeholder="Subject" type="text" name="subject">
-                  </div>
-                  <div class="row  col-md-12">
-                    <textarea class="textarea" placeholder="Message" type="text" name="message"></textarea>
-                  </div>
-                  <div align="center" class="col-md-12">
-                    <input type="submit" class="send" align="center" value="Send">
-                  </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-  </div>
-<br>
-<br>
-<br>
-<br>
-    <!-- end contact -->
 
 
 <!-- Footer -->
-<footer class="bg-dark text-center text-white" id="contact">
-  <div class="text-center p-3">
-    <u>
-    Stay in Touch:
-    </u>
-  </div>
-  <div class="container p-3">
-    <!-- Section: Social media -->
-    <section class="mb-4">
+<footer style="padding-top: 40px; padding-bottom: 30px; bottom: 0px;" class="bg-dark text-center text-white footer" id="contact">
+  <!-- Section: Social media -->
+    <!-- Facebook -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/Try-137308001841201" role="button"
+      ><i class="fa fa-facebook-f"></i
+    ></a>
 
-      <!-- Facebook -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/Try-137308001841201" role="button"
-        ><i class="fa fa-facebook-f"></i
-      ></a>
+    <!-- Instagram -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://instagram.com/_try_official_?utm_medium=copy_link" role="button"
+      ><i class="fa fa-instagram"></i
+    ></a>
 
-      <!-- Instagram -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://instagram.com/_try_official_?utm_medium=copy_link" role="button"
-        ><i class="fa fa-instagram"></i
-      ></a>
+    <!-- linked in -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/company/1try1/" role="button"
+      ><i class="fa fa-linkedin"></i
+    ></a>
 
-      <!-- linked in -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/company/1try1/" role="button"
-        ><i class="fa fa-linkedin"></i
-      ></a>
-
-      <!-- location -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/maps/place/%D7%92%D7%9F+%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94+(%D7%94%D7%99%D7%99%D7%98%D7%A7)+%D7%A0%D7%A6%D7%A8%D7%AA+-+%D7%9E%D7%A9%D7%A8%D7%93%D7%99%D7%9D+%D7%9C%D7%94%D7%A9%D7%9B%D7%A8%D7%94%E2%80%AD/@32.680689,35.2923789,15z/data=!4m5!3m4!1s0x0:0x275b82021d2a56f2!8m2!3d32.6810173!4d35.2925378" role="button"
-        ><i class="material-icons" style="font-size:16px">place</i></a>
-      
-
-    <!-- Section: Social media -->
-  </div>
+    <!-- location -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/maps/place/%D7%92%D7%9F+%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94+(%D7%94%D7%99%D7%99%D7%98%D7%A7)+%D7%A0%D7%A6%D7%A8%D7%AA+-+%D7%9E%D7%A9%D7%A8%D7%93%D7%99%D7%9D+%D7%9C%D7%94%D7%A9%D7%9B%D7%A8%D7%94%E2%80%AD/@32.680689,35.2923789,15z/data=!4m5!3m4!1s0x0:0x275b82021d2a56f2!8m2!3d32.6810173!4d35.2925378" role="button"
+      ><i class="material-icons" style="font-size:16px">place</i></a>
 </footer>
+<!-- end footer -->
 </body>
 
 <!-- end footer -->
@@ -463,6 +446,11 @@ p{
  var toggler = document.getElementById("navbartoggler")
  var team_btn = document.getElementById("team-btn")
  var team_op = document.getElementById("team-show")
+ var x = window.matchMedia("(max-width: 600px)")
+ var img1 = document.getElementById("img1")
+ var img2 = document.getElementById("img2")
+ var img3 = document.getElementById("img3")
+
  toggler.addEventListener("click", check)
  team_btn.addEventListener("click", check2)
  function check(){
@@ -482,6 +470,27 @@ p{
     team_op.classList.add("show")
   }
  }
+
+
+ function myFunction(x) {
+  if (x.matches) { // If media query matches
+    img1.classList.remove("w-50")
+    img1.classList.add("w-100")
+    img2.classList.remove("w-50")
+    img2.classList.add("w-100")
+    img3.classList.remove("w-50")
+    img3.classList.add("w-100")
+  } else {
+    img1.classList.remove("w-100")
+    img1.classList.add("w-50")
+    img2.classList.remove("w-100")
+    img2.classList.add("w-50")
+    img3.classList.remove("w-100")
+    img3.classList.add("w-50")
+  }
+}
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction) // Attach listener function on state changes
 </script>
 </body>
 

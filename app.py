@@ -10,7 +10,10 @@ Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+import os
 from flask import Flask, jsonify, request, render_template, url_for, redirect
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import  FileStorage
 import random
 import requests, json
 
@@ -19,7 +22,7 @@ app = Flask(  # Create a flask app
     template_folder='templates',  # Name of html file folder
     static_folder='static'  # Name of directory for static files
 )
-
+app.config['UPLOAD_FOLDER'] = 'static/images'
 app.config['TESTING'] = False
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -40,8 +43,8 @@ isAdmin = False
 email = ""
 
 
-def add_new_workshop(workshop_name, details, pictures):
-    new_workshop = Create_workshop(workshop_name=workshop_name, details=details, pictures=pictures)
+def add_new_workshop(workshop_name, details, pictures, max_registers):
+    new_workshop = Create_workshop(workshop_name=workshop_name, details=details, pictures=pictures, max_registers=max_registers)
     session.add(new_workshop)
     session.commit()
     
@@ -64,6 +67,16 @@ def get_workshop(name):
         workshop_name=name).first()
     return workshop
 
+def get_workshop_by_id(id):
+    workshop = session.query(
+        Create_workshop).filter_by(
+        id=id).first()
+    return workshop
+def get_news_by_id(id):
+    news = session.query(
+        Create_news).filter_by(
+        id=id).first()
+    return news
 
 def delete_workshop(workshop_id):
     session.query(Create_workshop).filter_by(id=workshop_id).delete()
@@ -114,7 +127,8 @@ def get_account(their_email):
 
 
 def sign_up_database(the_email, first_name, last_name, password, admin):
-    new_account = Make_account(first_name=first_name, last_name=last_name, email=the_email, password=password, admin=admin)
+    new_account = Make_account(first_name=first_name, last_name=last_name, email=the_email, admin=admin)
+    new_account.hash_password(password)
     session.add(new_account)
     session.commit()
 
@@ -150,7 +164,7 @@ def login():
         if get_account(login_email) is None:
             return render_template('login.html', login=login, email=email, login_info=False)
         else:
-            if password == get_account(login_email).password:
+            if get_account(email).verify_password(password):
                 print("login successful")
                 login = True
                 isAdmin = get_account(email).admin
@@ -180,6 +194,14 @@ def donate():
     return render_template('donate.html', login=login, email=email, admin=isAdmin)
 
 
+@app.route('/donatePointer', methods=['GET'])
+def donatePointerToMEET():
+    global email
+    global login
+    global isAdmin
+    return render_template('donatePointer.html', login=login, email=email, admin=isAdmin)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login_2():
     global email
@@ -192,7 +214,7 @@ def login_2():
         if get_account(login_email) is None:
             return render_template('login.html', login=login, email=email, login_info=False)
         else:
-            if password == get_account(login_email).password:
+            if get_account(email).verify_password(password):
                 print("login successful")
                 login = True
                 isAdmin = get_account(email).admin
@@ -242,8 +264,28 @@ def workshops():
     global email
     global login
     global isAdmin
+    user_already_registered = False
+    registers_dict = { }
+    already_registered = { }
     workshops = get_all_workshops()
-    return render_template('workshops.html', login=login, email=email, workshops=workshops, admin=isAdmin)
+    registered = get_all_registered()
+    for workshop in workshops:
+        for register in registered:
+            if workshop.id == register.workshop_id:
+                if email != '':
+                    if register.user_id == get_account(email).id:
+                        user_already_registered = True
+                if registers_dict.get(workshop.id) is None:
+                    registers_dict[workshop.id] = 1
+                else:
+                    registers_dict[workshop.id] += 1
+            if registers_dict.get(workshop.id) is None:
+                registers_dict[workshop.id] = 0
+        if registered == []:
+            registers_dict[workshop.id] = 0
+        already_registered[workshop.id] = user_already_registered
+        user_already_registered = False
+    return render_template('workshops.html', login=login, email=email, workshops=workshops, admin=isAdmin, registers_dict=registers_dict, already_registered=already_registered)
 
 
 @app.route('/news', methods=['GET'])
@@ -282,11 +324,18 @@ def admin_page_1():
 def add_workshop():
     global email
     global login
+    global isAdmin
     if request.method == 'POST':
         workshop_name = request.form['workshop_name']
         workshop_details = request.form['workshop_details']
-        workshop_pictures = request.form['workshop_pictures']
-        add_new_workshop(workshop_name, workshop_details, workshop_pictures)
+        max_registers = request.form['max_registers']
+        f = request.files['file']
+        filepath = ''
+        if f.filename != '':
+            f.save(secure_filename(f.filename))
+            filepath = "static/images/" + f.filename 
+            os.rename(f.filename, filepath)
+        add_new_workshop(workshop_name, workshop_details, filepath, max_registers)
         users = get_all_users()
         workshops = get_all_workshops()
         return redirect('/admin_page_page')
@@ -298,35 +347,58 @@ def add_workshop():
 def add_the_news():
     global email
     global login
+    global isAdmin
     if request.method == 'POST':
         news_title = request.form['news_title']
-        workshop_details = request.form['workshop_details']
-        workshop_pictures = request.form['workshop_pictures']
-        add_news(news_title, workshop_details, workshop_pictures)
+        news_details = request.form['news_details']
+        f = request.files['file']
+        filepath = ''
+        if f.filename != '':
+            f.save(secure_filename(f.filename))
+            filepath = "static/images/" + f.filename 
+            os.rename(f.filename, filepath)
+        news_pictures = filepath
+        add_news(news_title, news_details, news_pictures)
         return redirect('/admin_page_page')
     else:
-        return render_template('add_news.html')
+        return render_template('add_news.html', email=email, login=login, admin=isAdmin)
 
 
 @app.route('/register_to_a_workshop/<int:workshop_id>', methods=['GET', 'POST'])
 def register_workshop(workshop_id):
     global email
     global login
+    global isAdmin
     show = True
+    overload = False
     workshops = get_all_workshops()
+    registered = get_all_registered()
     print("emailllll", email)
+    registers_dict = {}
+    for workshop in workshops:
+        for register in registered:
+            if workshop.id == register.workshop_id:
+                if registers_dict.get(workshop.id) is None:
+                    registers_dict[workshop.id] = 1
+                else:
+                    registers_dict[workshop.id] += 1
+            if registers_dict.get(workshop.id) is None:
+                registers_dict[workshop.id] = 0
+        if registered == []:
+            registers_dict[workshop.id] = 0
     if email != '':
         user_id = get_account(email).id
-        registered = get_all_registered_by_id(workshop_id)
-        for register in registered:
+        registered_by_id = get_all_registered_by_id(workshop_id)
+        for register in registered_by_id:
             if register.user_id == user_id:
                 show = False
-    if login == True and show:
+    if get_workshop_by_id(workshop_id).max_registers <= registers_dict.get(workshop_id):
+        overload = True
+    if login == True and show and overload == False:
+        register_to_workshop(workshop_id, user_id)
         msg = Message("Hello", recipients=[email])
         msg.html = "You have successfully registered for our upcoming workshop!\nThe workshop will be held in our youth club in Nazareth (TRY youth club), from 17:00 - 20:00.\nFor more information you can reach out through this email: try.club2021@gmail.com\nPlease confirm your coming by simply replying to this message.\nThank you!"
         mail.send(msg)
-        user_id = get_account(email).id
-        register_to_workshop(workshop_id, user_id)
     return redirect('/workshops')
 
 
@@ -360,12 +432,16 @@ def demote_user_admin(user_email):
 
 @app.route('/remove_workshop/<string:workshop_id>', methods=['GET'])
 def delete_workshop_with_id(workshop_id):
+    workshop1 = get_workshop_by_id(workshop_id)
+    os.remove(workshop1.pictures) 
     delete_workshop(workshop_id)
     return redirect('/admin_page_page')
 
 
 @app.route('/remove_news/<string:news_id>', methods=['GET'])
 def delete_news_from_id(news_id):
+    news1 = get_news_by_id(news_id)
+    os.remove(news1.pictures) 
     delete_new(news_id)
     return redirect('/admin_page_page')
 

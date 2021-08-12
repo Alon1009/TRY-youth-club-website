@@ -48,6 +48,15 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style type="text/css">
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 
 .news_container {
   display: table;
@@ -71,7 +80,6 @@
 }
 
 
-
 </style>
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -83,6 +91,7 @@
     <div class="loader"><img src="static/images/loading.gif" alt="#" /></div>
   </div>
 
+<div style="padding-bottom: 116px;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="/home"><img src="static/images/logoo.png" alt="..." width="70" height="40"></a>
@@ -93,7 +102,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a href="/home" class="nav-link px-2 text-dark">Home</a></li>
         <li class="nav-item"><a href="/home#about" class="nav-link px-2 text-dark">About us</a></li>
-        <li class="nav-item"><a href="/home#why_us" class="nav-link px-2 text-dark">Why us</a></li>
+        <li class="nav-item"><a href="/home#why_us" class="nav-link px-2 text-dark">Why TRY</a></li>
         <li class="nav-item dropdown">
           <a id="team-btn" class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Team
@@ -103,10 +112,9 @@
             <li><a class="dropdown-item" href="/ambassador">TRY Ambassadors</a></li>
           </ul>
         </li>
-        <li class="nav-item"><a href="/home#contact" class="nav-link px-2 text-dark">Contact</a></li>
         <li class="nav-item"><a href="/workshops" class="nav-link px-2 text-dark">Workshops</a></li>
         <li class="nav-item"><a href="/news" class="nav-link px-2 text-secondary">News</a></li>
-        <li class="nav-item"><a href="/donate" class="nav-link px-2 text-dark">Donate</a></li>
+        <li class="nav-item"><a href="/donatePointer" class="nav-link px-2 text-dark">Donate</a></li>
         {% if admin == true %}
           <li class="nav-item"><a href="/admin_page_page" class="nav-link px-2 text-dark">Admin</a></li>
         {% endif %}
@@ -126,13 +134,13 @@
   </div>
 </nav>
 
-<div class="row">
+<div class="row" >
 {% for new in news %}
 
   <div class="col-lg-3" style="padding: 2em;">
     <div class="newsContainer">
         <h1 class = "news_title"><b>{{new.news_title}}</b></h1> 
-        <p>{{new.details}}</p>
+        <p style="font-size: 16px;">{{new.details}}</p>
     </div>
   </div>
   <div class="col-lg-3" style="padding-bottom: 2em;">
@@ -140,43 +148,32 @@
   </div>
 
 {% endfor %}
-
+</div>
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-center text-white" id="contact">
-  <div class="text-center p-3">
-    <u>
-    Stay in Touch:
-    </u>
-  </div>
-  <div class="container p-3">
-    <!-- Section: Social media -->
-    <section class="mb-4">
+<footer style="padding-top: 40px; padding-bottom: 30px; bottom: 0px; margin: 0;" class="bg-dark text-center text-white footer" id="contact">
+  <!-- Section: Social media -->
+    <!-- Facebook -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/Try-137308001841201" role="button"
+      ><i class="fa fa-facebook-f"></i
+    ></a>
 
-      <!-- Facebook -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/Try-137308001841201" role="button"
-        ><i class="fa fa-facebook-f"></i
-      ></a>
+    <!-- Instagram -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://instagram.com/_try_official_?utm_medium=copy_link" role="button"
+      ><i class="fa fa-instagram"></i
+    ></a>
 
-      <!-- Instagram -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://instagram.com/_try_official_?utm_medium=copy_link" role="button"
-        ><i class="fa fa-instagram"></i
-      ></a>
+    <!-- linked in -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/company/1try1/" role="button"
+      ><i class="fa fa-linkedin"></i
+    ></a>
 
-      <!-- linked in -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/company/1try1/" role="button"
-        ><i class="fa fa-linkedin"></i
-      ></a>
-
-      <!-- location -->
-      <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/maps/place/%D7%92%D7%9F+%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94+(%D7%94%D7%99%D7%99%D7%98%D7%A7)+%D7%A0%D7%A6%D7%A8%D7%AA+-+%D7%9E%D7%A9%D7%A8%D7%93%D7%99%D7%9D+%D7%9C%D7%94%D7%A9%D7%9B%D7%A8%D7%94%E2%80%AD/@32.680689,35.2923789,15z/data=!4m5!3m4!1s0x0:0x275b82021d2a56f2!8m2!3d32.6810173!4d35.2925378" role="button"
-        ><i class="material-icons" style="font-size:16px">place</i></a>
-      
-
-    <!-- Section: Social media -->
-  </div>
+    <!-- location -->
+    <a target="_blank" class="btn btn-outline-light btn-floating m-1" href="https://www.google.com/maps/place/%D7%92%D7%9F+%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94+(%D7%94%D7%99%D7%99%D7%98%D7%A7)+%D7%A0%D7%A6%D7%A8%D7%AA+-+%D7%9E%D7%A9%D7%A8%D7%93%D7%99%D7%9D+%D7%9C%D7%94%D7%A9%D7%9B%D7%A8%D7%94%E2%80%AD/@32.680689,35.2923789,15z/data=!4m5!3m4!1s0x0:0x275b82021d2a56f2!8m2!3d32.6810173!4d35.2925378" role="button"
+      ><i class="material-icons" style="font-size:16px">place</i></a>
 </footer>
+<!-- end footer -->
 <script type="text/javascript">
   
 </script>

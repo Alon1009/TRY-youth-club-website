@@ -13,7 +13,7 @@
 
 <div class="login-box">
     <h2>Add WorkShop</h2>
-    <form action="/add_workshop" method = "POST">
+    <form action="/add_workshop" enctype="multipart/form-data" method = "POST">
     <div class="user-box">
 	    <input type="text" name="workshop_name" required="">
 	    <label>Name</label>
@@ -22,10 +22,14 @@
 	    <input type="text" name="workshop_details" required="">
 	    <label>details</label>
 	</div>
-	<div class="user-box">
-	    <input type="text" name="workshop_pictures" required="">
-	    <label>pictures</label>
-	</div>
+    <div class="user-box">
+        <input type="text" name="max_registers" required="">
+        <label>max registers</label>
+    </div>
+    <div class="user-box">
+        <input type = "file" name = "file"/>
+        <label>upload image</label>
+    </div>
         <a style="color: white;" href="" onclick="this.closest('form').submit();return false;">
             <span></span>
             <span></span>
