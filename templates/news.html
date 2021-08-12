@@ -48,15 +48,21 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style type="text/css">
-  html {
-    position: relative;
-    min-height: 100%;
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+  body {
+    display: flex;
+    flex-direction: column;
   }
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 
 .news_container {
   display: table;
@@ -91,65 +97,66 @@
     <div class="loader"><img src="static/images/loading.gif" alt="#" /></div>
   </div>
 
-<div style="padding-bottom: 116px;">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/home"><img src="static/images/logoo.png" alt="..." width="70" height="40"></a>
-    <button id="navbartoggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="collapsecheck" class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a href="/home" class="nav-link px-2 text-dark">Home</a></li>
-        <li class="nav-item"><a href="/home#about" class="nav-link px-2 text-dark">About us</a></li>
-        <li class="nav-item"><a href="/home#why_us" class="nav-link px-2 text-dark">Why TRY</a></li>
-        <li class="nav-item dropdown">
-          <a id="team-btn" class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Team
-          </a>
-          <ul id="team-show" class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/home#team">Team</a></li>
-            <li><a class="dropdown-item" href="/ambassador">TRY Ambassadors</a></li>
-          </ul>
-        </li>
-        <li class="nav-item"><a href="/workshops" class="nav-link px-2 text-dark">Workshops</a></li>
-        <li class="nav-item"><a href="/news" class="nav-link px-2 text-secondary">News</a></li>
-        <li class="nav-item"><a href="/donatePointer" class="nav-link px-2 text-dark">Donate</a></li>
-        {% if admin == true %}
-          <li class="nav-item"><a href="/admin_page_page" class="nav-link px-2 text-dark">Admin</a></li>
-        {% endif %}
-      </ul>
-      <span class="navbar-text">
-          {% if login == False %}
-           <a class="btn btn-outline-dark me-2" href="/login">log-in</a>   
-           <a class="btn btn-warning" href="/sign_up">sign-up</a>              
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home"><img src="static/images/logoo.png" alt="..." width="70" height="40"></a>
+      <button id="navbartoggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="collapsecheck" class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a href="/home" class="nav-link px-2 text-dark">Home</a></li>
+          <li class="nav-item"><a href="/home#about" class="nav-link px-2 text-dark">About us</a></li>
+          <li class="nav-item"><a href="/home#why_us" class="nav-link px-2 text-dark">Why TRY</a></li>
+          <li class="nav-item dropdown">
+            <a id="team-btn" class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Team
+            </a>
+            <ul id="team-show" class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/home#team">Team</a></li>
+              <li><a class="dropdown-item" href="/ambassador">TRY Ambassadors</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="/workshops" class="nav-link px-2 text-dark">Workshops</a></li>
+          <li class="nav-item"><a href="/news" class="nav-link px-2 text-secondary">News</a></li>
+          <li class="nav-item"><a href="/donatePointer" class="nav-link px-2 text-dark">Donate</a></li>
+          {% if admin == true %}
+            <li class="nav-item"><a href="/admin_page_page" class="nav-link px-2 text-dark">Admin</a></li>
           {% endif %}
-          {% if login == True %}
-          <a class="btn btn-danger" href="/log_out">log-out</a>
-          {% endif %}
+        </ul>
+        <span class="navbar-text">
+            {% if login == False %}
+             <a class="btn btn-outline-dark me-2" href="/login">log-in</a>   
+             <a class="btn btn-warning" href="/sign_up">sign-up</a>              
+            {% endif %}
+            {% if login == True %}
+            <a class="btn btn-danger" href="/log_out">log-out</a>
+            {% endif %}
+      </div>
     </div>
-  </div>
-      </span>
+        </span>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+<div style="padding-bottom:116px;">
+  <div class="row" >
+  {% for new in news %}
 
-<div class="row" >
-{% for new in news %}
-
-  <div class="col-lg-3" style="padding: 2em;">
-    <div class="newsContainer">
-        <h1 class = "news_title"><b>{{new.news_title}}</b></h1> 
-        <p style="font-size: 16px;">{{new.details}}</p>
+    <div class="col-lg-3" style="padding: 2em;">
+      <div class="newsContainer">
+          <h1 class = "news_title"><b>{{new.news_title}}</b></h1> 
+          <p style="font-size: 16px;">{{new.details}}</p>
+      </div>
     </div>
-  </div>
-  <div class="col-lg-3" style="padding-bottom: 2em;">
-      <img src="{{new.pictures}}" >
-  </div>
+    <div class="col-lg-3" style="padding-bottom: 2em;">
+        <img src="{{new.pictures}}" >
+    </div>
 
-{% endfor %}
+  {% endfor %}
+  </div>
 </div>
-</div>
+
 
 <!-- Footer -->
 <footer style="padding-top: 40px; padding-bottom: 30px; bottom: 0px; margin: 0;" class="bg-dark text-center text-white footer" id="contact">
