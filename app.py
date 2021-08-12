@@ -40,7 +40,7 @@ mail = Mail(app)
 
 login = False
 isAdmin = False
-email = ""
+email = ''
 
 
 def add_new_workshop(workshop_name, details, pictures, max_registers):
@@ -409,6 +409,7 @@ def log_out():
     global isAdmin
     login = False
     isAdmin = False
+    email = ''
     return redirect('/home')
 
 
