@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_mail import Mail
 from flask_mail import Message
-
+from flask import session as login_session
 engine = create_engine('sqlite:///database.db', connect_args={'check_same_thread': False})
 Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
@@ -22,6 +22,7 @@ app = Flask(  # Create a flask app
     template_folder='templates',  # Name of html file folder
     static_folder='static'  # Name of directory for static files
 )
+app.config['SECRET_KEY'] = 'you-will-never-guess'
 app.config['UPLOAD_FOLDER'] = 'static/images'
 app.config['TESTING'] = False
 app.config['SECRET_KEY'] = 'you-will-never-guess'
@@ -37,10 +38,6 @@ app.config['MAIL_ASCII_ATTACHMENTS'] = False
 # app.config['MAIL_SUPPRESS_SEND'] = False
 # app.config['MAIL_DEBUG'] = True
 mail = Mail(app)
-
-login = False
-isAdmin = False
-email = ''
 
 
 def add_new_workshop(workshop_name, details, pictures, max_registers):
@@ -90,6 +87,16 @@ def delete_new(new_id):
 
 def delete_register(register_id):
     session.query(Registered_users).filter_by(id=register_id).delete()
+    session.commit()
+
+
+def delete_register_by_workshop(workshop_id):
+    session.query(Registered_users).filter_by(workshop_id=workshop_id).delete()
+    session.commit()
+
+
+def delete_register_by_user(user_id):
+    session.query(Registered_users).filter_by(user_id=user_id).delete()
     session.commit()
 
 
@@ -151,119 +158,97 @@ def update_workshop_1(workshop, workshop_name, details, pictures):
 
 @app.route('/home', methods=['GET', 'POST'])
 def login():
-    global email
-    global login
-    global isAdmin
-    news = get_all_news()
-    if login != True:
-        login = False
+    if login_session["login"] != True:
+        login_session["login"] = False
     if request.method == 'POST':
         login_email = request.form['email']
         password = request.form['password']
-        email = login_email
+        login_session["email"] = login_email
         if get_account(login_email) is None:
-            return render_template('login.html', login=login, email=email, login_info=False)
+            return render_template('login.html', login_info=False)
         else:
-            if get_account(email).verify_password(password):
+            if get_account(login_session["email"]).verify_password(password):
                 print("login successful")
-                login = True
-                isAdmin = get_account(email).admin
-                return render_template('index.html', login=login, email=email, admin=isAdmin, news=news)
+                login_session["login"] = True
+                login_session["isAdmin"] = get_account(login_session["email"]).admin
+                return render_template('index.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
             else:
                 print("login info incorrect")
-                return render_template('login.html', login=login, login_info=False)
+                return render_template('login.html', login_info=False)
     else:
-        return render_template('index.html', login=login, email=email, admin=isAdmin, news=news)
+        return render_template('index.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
 
 
 @app.route('/', methods=['GET'])
 def home():
-    global email
-    global login
-    global isAdmin
-    login = False
-    isAdmin = False
+    login_session["email"] = ''
+    login_session["login"] = False
+    login_session["isAdmin"] = False
     return redirect('/home')
 
 
 @app.route('/donate', methods=['GET'])
 def donate():
-    global email
-    global login
-    global isAdmin
-    return render_template('donate.html', login=login, email=email, admin=isAdmin)
+    return render_template('donate.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
 
 
 @app.route('/donatePointer', methods=['GET'])
 def donatePointerToMEET():
-    global email
-    global login
-    global isAdmin
-    return render_template('donatePointer.html', login=login, email=email, admin=isAdmin)
+    return render_template('donatePointer.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_2():
-    global email
-    global login
-    global isAdmin
     if request.method == 'POST':
         login_email = request.form['email']
         password = request.form['password']
-        email = login_email
+        login_session["email"] = login_email
         if get_account(login_email) is None:
-            return render_template('login.html', login=login, email=email, login_info=False)
+            return render_template('login.html', login_info=False)
         else:
-            if get_account(email).verify_password(password):
+            if get_account(login_session["email"]).verify_password(password):
                 print("login successful")
-                login = True
-                isAdmin = get_account(email).admin
+                login_session["login"] = True
+                login_session["isAdmin"] = get_account(login_session["email"]).admin
                 return redirect('/home')
             else:
                 print("login info incorrect")
-                return render_template('login.html', login=login, login_info=False)
+                return render_template('login.html', login_info=False)
     else:
 
-        return render_template('login.html', login=login, login_info=True)
+        return render_template('login.html', login_info=True)
 
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
-    global email
-    global login
-    global isAdmin
     if request.method == 'POST':
         get_email = request.form['email']
         password = request.form['password']
         first_name = request.form['first_name']
         last_name = request.form['last_name']
-        email = get_email
-        msg = Message("Hello", recipients=[email])         
-        msg.html = "<b>Hey!</b>\nYou have successfully signed up on our TRY website, by signing up you will be getting notifications on our latest news, upcoming events and workshops.\nWe are thrilled to share our amazing journey with you!\nFor more information you can reach out through this email: try.club2021@gmail.com"
-        mail.send(msg)
-        if email == "" or password == "" or first_name == "" or last_name == "":
-            return render_template('sign_up.html', login=login, email=email, empty=False)
-        elif "@" not in email and "." not in email:
-            return render_template('sign_up.html', login=login, email=email, emailError=False)
+        login_session["email"] = get_email
+        if login_session["email"] == "" or password == "" or first_name == "" or last_name == "":
+            return render_template('sign_up.html', empty=False)
+        elif "@" not in login_session["email"] and "." not in login_session["email"]:
+            return render_template('sign_up.html', emailError=False)
         else:
-            if get_account(email) is None:
-                login = True
-                adminValue = False
-                isAdmin = adminValue
-                sign_up_database(get_email, first_name, last_name, password, adminValue)
+            if get_account(login_session["email"]) is None:
+                msg = Message("Hello", recipients=[login_session["email"]])         
+                msg.html = "<b>Hey!</b>\nYou have successfully signed up on our TRY website, by signing up you will be getting notifications on our latest news, upcoming events and workshops.\nWe are thrilled to share our amazing journey with you!\nFor more information you can reach out through this email: try.club2021@gmail.com"
+                mail.send(msg)
+                login_session["login"] = True
+                login_session["isAdmin"] = False
+                sign_up_database(get_email, first_name, last_name, password, login_session["isAdmin"])
                 return redirect('/home')
             else:
-                return render_template('sign_up.html', login=login, email=email, exists=False)
+                return render_template('sign_up.html', exists=False)
     else:
         return render_template('sign_up.html')
 
 
 @app.route('/workshops', methods=['GET'])
 def workshops():
-    global email
-    global login
-    global isAdmin
     user_already_registered = False
     registers_dict = { }
     already_registered = { }
@@ -272,8 +257,8 @@ def workshops():
     for workshop in workshops:
         for register in registered:
             if workshop.id == register.workshop_id:
-                if email != '':
-                    if register.user_id == get_account(email).id:
+                if login_session["email"] != '':
+                    if register.user_id == get_account(login_session["email"]).id:
                         user_already_registered = True
                 if registers_dict.get(workshop.id) is None:
                     registers_dict[workshop.id] = 1
@@ -285,46 +270,34 @@ def workshops():
             registers_dict[workshop.id] = 0
         already_registered[workshop.id] = user_already_registered
         user_already_registered = False
-    return render_template('workshops.html', login=login, email=email, workshops=workshops, admin=isAdmin, registers_dict=registers_dict, already_registered=already_registered)
+    return render_template('workshops.html', login=login_session["login"], email=login_session["email"], workshops=workshops, admin=login_session["isAdmin"], registers_dict=registers_dict, already_registered=already_registered)
 
 
 @app.route('/news', methods=['GET'])
 def news():
-    global email
-    global login
-    global isAdmin
     news = get_all_news()
-    return render_template('news.html', login=login, email=email, news=news, admin=isAdmin)
+    return render_template('news.html', login=login_session["login"], email=login_session["email"], news=news, admin=login_session["isAdmin"])
 
 
 @app.route('/ambassador', methods=['GET'])
 def ambassador():
-    global email
-    global login
-    global isAdmin
-    return render_template('embasiders.html', login=login, email=email, admin=isAdmin)
+    return render_template('embasiders.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
 
 
 @app.route('/admin_page_page', methods=['GET'])
 def admin_page_1():
-    global email
-    global login
-    global isAdmin
     users = get_all_users()
     workshops = get_all_workshops()
     registered = get_all_registered()
     news = get_all_news()
-    if isAdmin == True:
-        return render_template('admin.html', login=login, email=email, users=users, workshops=workshops, admin=isAdmin, registered=registered, news=news)
+    if login_session["isAdmin"] == True:
+        return render_template('admin.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"], users=users, workshops=workshops, registered=registered, news=news)
     else:
         return redirect('/home')
 
 
 @app.route('/add_workshop', methods=['GET', 'POST'])
 def add_workshop():
-    global email
-    global login
-    global isAdmin
     if request.method == 'POST':
         workshop_name = request.form['workshop_name']
         workshop_details = request.form['workshop_details']
@@ -340,14 +313,11 @@ def add_workshop():
         workshops = get_all_workshops()
         return redirect('/admin_page_page')
     else:
-        return render_template('add_workshop.html', login=login, email=email, admin=isAdmin)
+        return render_template('add_workshop.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
 
 
 @app.route('/add_news', methods=['GET', 'POST'])
 def add_the_news():
-    global email
-    global login
-    global isAdmin
     if request.method == 'POST':
         news_title = request.form['news_title']
         news_details = request.form['news_details']
@@ -361,19 +331,15 @@ def add_the_news():
         add_news(news_title, news_details, news_pictures)
         return redirect('/admin_page_page')
     else:
-        return render_template('add_news.html', email=email, login=login, admin=isAdmin)
+        return render_template('add_news.html', login=login_session["login"], email=login_session["email"], admin=login_session["isAdmin"])
 
 
 @app.route('/register_to_a_workshop/<int:workshop_id>', methods=['GET', 'POST'])
 def register_workshop(workshop_id):
-    global email
-    global login
-    global isAdmin
     show = True
     overload = False
     workshops = get_all_workshops()
     registered = get_all_registered()
-    print("emailllll", email)
     registers_dict = {}
     for workshop in workshops:
         for register in registered:
@@ -386,17 +352,17 @@ def register_workshop(workshop_id):
                 registers_dict[workshop.id] = 0
         if registered == []:
             registers_dict[workshop.id] = 0
-    if email != '':
-        user_id = get_account(email).id
+    if login_session["email"] != '':
+        user_id = get_account(login_session["email"]).id
         registered_by_id = get_all_registered_by_id(workshop_id)
         for register in registered_by_id:
             if register.user_id == user_id:
                 show = False
     if get_workshop_by_id(workshop_id).max_registers <= registers_dict.get(workshop_id):
         overload = True
-    if login == True and show and overload == False:
+    if login_session["login"] == True and show and overload == False:
         register_to_workshop(workshop_id, user_id)
-        msg = Message("Hello", recipients=[email])
+        msg = Message("Hello", recipients=[login_session["email"]])
         msg.html = "You have successfully registered for our upcoming workshop!\nThe workshop will be held in our youth club in Nazareth (TRY youth club), from 17:00 - 20:00.\nFor more information you can reach out through this email: try.club2021@gmail.com\nPlease confirm your coming by simply replying to this message.\nThank you!"
         mail.send(msg)
     return redirect('/workshops')
@@ -404,18 +370,17 @@ def register_workshop(workshop_id):
 
 @app.route('/log_out', methods=['GET'])
 def log_out():
-    global email
-    global login
-    global isAdmin
-    login = False
-    isAdmin = False
-    email = ''
+    login_session["login"] = False
+    login_session["isAdmin"] = False
+    login_session["email"] = ''
     return redirect('/home')
 
 
 @app.route('/remove_user/<string:user_email>', methods=['GET'])
 def remove_user_from_database(user_email):
+    user_id = get_account(user_email).id
     delete_user(user_email)
+    delete_register_by_user(user_id)
     return redirect('/admin_page_page')
 
 
@@ -434,15 +399,18 @@ def demote_user_admin(user_email):
 @app.route('/remove_workshop/<string:workshop_id>', methods=['GET'])
 def delete_workshop_with_id(workshop_id):
     workshop1 = get_workshop_by_id(workshop_id)
-    os.remove(workshop1.pictures) 
+    if workshop1.pictures != '':
+        os.remove(workshop1.pictures) 
     delete_workshop(workshop_id)
+    delete_register_by_workshop(workshop_id)
     return redirect('/admin_page_page')
 
 
 @app.route('/remove_news/<string:news_id>', methods=['GET'])
 def delete_news_from_id(news_id):
     news1 = get_news_by_id(news_id)
-    os.remove(news1.pictures) 
+    if news1.pictures != '':
+        os.remove(news1.pictures) 
     delete_new(news_id)
     return redirect('/admin_page_page')
 
